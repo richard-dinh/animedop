@@ -60,7 +60,7 @@ router.get('/anime', (req, res) => {
           }
         }
       }
-      res.json({arr, arr2})
+      res.json(arr2)
     })
 })
 
