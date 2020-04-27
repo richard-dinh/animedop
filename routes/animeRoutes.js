@@ -22,28 +22,42 @@ router.get('/animesearch', (req, res) => {
 
 //get videos based on string
 router.get('/anime', (req, res) => {
-  r.getSubreddit('AnimeThemes').getWikiPage('2018#wiki_zombieland_saga').content_md
+  r.getSubreddit('AnimeThemes').getWikiPage('90s#wiki_yu.2606gi.2606oh.21').content_md
     .then(data => {
       //put all to lower case
       data = data.toLowerCase()
-      // console.log(data.indexOf('zombieland'))
-      // console.log(data.indexOf('###', data.indexOf('zombieland')))
-      let data2 = data.slice(data.indexOf('zombieland'), data.indexOf('###', data.indexOf('zombieland')))
+      //strings must be in lower case
+      let data2 = data.slice(data.indexOf('yu☆gi☆oh'), data.indexOf('###', data.indexOf('yu☆gi☆oh')))
       let arr = data2.split(/\r\n/g)
       // console.log(arr)
       let arr2 = []
       for(let i = 0; i< arr.length; i++){
-        //getting the myanimelist link
+        //getting the myanimelist link and returning it as the first obj in arr2
         if(i === 0) {
           let temp = arr[i].split(']')
-          console.log(temp[0])
-          console.log(temp[1].replace(/\(|\)/g, ''))
           let obj = {
             name: temp[0],
             //remove all ( and ) characters in the string
             mal: temp[1].replace(/\(|\)/g, '')
           }
           arr2.push(obj)
+        }
+        else{
+          let firstTwo = arr[i].substring(0, 2)
+          //if first two characters of the string are op or ed
+          if(firstTwo === 'op' || firstTwo === 'ed'){
+            // splitting this way makes it so that:
+            // index 0 = op/ed number, index 1 = name of song, index 5 = link to song, index 6 specifies the episodes
+            let temp = arr[i].split(/"|\[|\]|\|/)
+            let obj = {
+              number: temp[0],
+              title: temp[1],
+              link: temp[5].replace(/\(|\)/g, ''),
+              episode: temp[6]
+            }
+            arr2.push(obj)
+            // console.log(arr[i])
+          }
         }
       }
       res.json({arr, arr2})
