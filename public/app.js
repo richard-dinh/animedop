@@ -9,7 +9,7 @@ axios.get('/api/anime')
     listItem.innerHTML = `
     number: ${data[i].number}<br>
     title: ${data[i].title}<br>
-    link: ${data[i].link}<br>
+    link: <span><a href="${data[i].link}" target="_blank" rel="noopener noreferrer">Link</a></span><br>
     episode(s): ${data[i].episode || 'N/A'}
     `
     results.append(listItem)

@@ -22,12 +22,12 @@ router.get('/animesearch', (req, res) => {
 
 //get videos based on string
 router.get('/anime', (req, res) => {
-  r.getSubreddit('AnimeThemes').getWikiPage('90s#wiki_yu.2606gi.2606oh.21').content_md
+  r.getSubreddit('AnimeThemes').getWikiPage('2019#wiki_tate_no_yuusha_no_nariagari').content_md
     .then(data => {
       //put all to lower case
       data = data.toLowerCase()
       //strings must be in lower case
-      let data2 = data.slice(data.indexOf('yu☆gi☆oh'), data.indexOf('###', data.indexOf('yu☆gi☆oh')))
+      let data2 = data.slice(data.indexOf('tate no yuusha no nariagari'), data.indexOf('###', data.indexOf('tate no yuusha no nariagari')))
       let arr = data2.split(/\r\n/g)
       // console.log(arr)
       let arr2 = []
@@ -49,6 +49,7 @@ router.get('/anime', (req, res) => {
             // splitting this way makes it so that:
             // index 0 = op/ed number, index 1 = name of song, index 5 = link to song, index 6 specifies the episodes
             let temp = arr[i].split(/"|\[|\]|\|/)
+            console.log(arr[i])
             let obj = {
               number: temp[0],
               title: temp[1],
