@@ -8,15 +8,29 @@
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-  
-  <h1>Animedop</h1>
+  <!-- Jumbotron -->
+  <div class="jumbotron">
+    <h1 class="display-4">Ur Mum</h1>
+    <hr class="my-4">
+  </div>
   <br>
-  <form>
-    <label for="search">Search Anime</label>
-    <br>
-    <input type="text" id="search" name="search">
-  </form>
+
+  <div class = "container">
+    <div class = "row">
+      <!-- Search Form -->
+      <form class = "col-12">
+        <div class="form-group">
+          <label for="search">Search Anime</label>
+          <input type="text" class="form-control" id="search" aria-describedby="searchHelp">
+          <small id="searchHelp" class="form-text text-muted">Supports English Anime Titles!</small>
+        </div>
+        <button type="submit" class="btn btn-primary" id = "submit">Submit</button>
+      </form>
+
+    </div>
+  </div>
   <br>
+  <!-- Results -->
   <main>
     <h1 id = "name"></h1>
     <h3 id = 'mal'></h3>
