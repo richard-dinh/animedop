@@ -1,5 +1,4 @@
 //variable to store user's anime search
-let anime
 let wikiPage
 // axios.get('/api/anime')
 // .then(({data}) => {
@@ -21,6 +20,8 @@ let wikiPage
 // .catch(err => console.err(err))
 
 const renderResults = title => {
+  //empty out results
+  document.getElementById('results').innerHTML = ''
   axios.get(`https://api.jikan.moe/v3/search/anime?q=${title}&limit=30`)
     .then(({ data: { results } }) => {
       //jikan returns the anime titles in the results key
@@ -66,20 +67,28 @@ document.addEventListener('click', event => {
   else if(target.classList.contains('searchResult')){
     let parent = target.parentNode.parentNode
     console.log(parent.dataset)
-    anime = `${parent.dataset.title} (${parent.dataset.year})`
+    let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
     if (parseInt(parent.dataset.year) < 2000) {
       //get last two digits and round down to nearest 10
-      let year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
-      console.log(`${parent.dataset.title} (${year}s)`)
+      year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
+      // console.log(`${parent.dataset.title} (${year}s)`)
       //run api call here to get wikipage on animeThemes
-      axios.get(`/api/animesearch/${anime}`)
+    }
+    console.log(`/api/animesearch/${parent.dataset.title} (${parent.dataset.year})`)
+    axios.get(`/api/animesearch/${parent.dataset.title} (${parent.dataset.year})`)
+    .then( ({data}) => {
+      console.log(data)
+    })
+    .catch(err => {
+      //in case there's an error, search for the second way the year is formatted
+      axios.get(`/api/animesearch/${parent.dataset.title} (${year}s)`)
       .then( ({data}) => {
         console.log(data)
       })
-      .catch(err => {
-        //in case there's an error, search for the second way
+      .catch( err => {
+        console.error('Opening and Endings cannot be found')
       })
-    }
+    })
   }
 })

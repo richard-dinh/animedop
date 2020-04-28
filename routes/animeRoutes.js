@@ -14,11 +14,16 @@ const r = new snoowrap({
 router.get('/animesearch/:title', (req, res) => {
   r.getSubreddit('AnimeThemes').getWikiPage('anime_index').content_md
     .then(data => {
-      console.log(data.indexOf(req.params.title))
-      let data2 = data.split(req.params.title)[1]
-      data2 = data2.substring(0, data2.indexOf('\r'))
-      data2 = data2.replace(/\(|\)|]/g, '')
-      res.json({ wikiPage: data2 })
+      //error checking for right title
+      if (data.indexOf(req.params.title) === -1) {
+        res.sendStatus(400)
+      }
+      else{
+        let data2 = data.split(req.params.title)[1]
+        data2 = data2.substring(0, data2.indexOf('\r'))
+        data2 = data2.replace(/\(|\)|]/g, '')
+        res.json({ wikiPage: data2 })
+      }
     })
 })
 
