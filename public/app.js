@@ -26,7 +26,6 @@ const renderResults = title => {
       //jikan returns the anime titles in the results key
       console.log(results)
       for (let i = 0; i < results.length; i++) {
-        //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
         //only create cards for anime that have already aired
         if (results[i].start_date !== null) {
           let animeNode = document.createElement('div')
@@ -57,10 +56,22 @@ const renderResults = title => {
 
 //event listener on all searchResults
 document.addEventListener('click', event => {
-  if(event.target.id === 'submit') {
+  let target = event.target
+  if(target.id === 'submit') {
     event.preventDefault()
     renderResults(document.getElementById('search').value)
     //empty out user input
     document.getElementById('search').value = ''
+  }
+  else if(target.classList.contains('searchResult')){
+    let parent = target.parentNode.parentNode
+    console.log(parent.dataset)
+    console.log(`${parent.dataset.title} (${parent.dataset.year})`)
+    //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
+    if (parseInt(parent.dataset.year) < 2000) {
+      //get last two digits and round down to nearest 10
+      let year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
+      console.log(`${parent.dataset.title} (${year}s)`)
+    }
   }
 })
