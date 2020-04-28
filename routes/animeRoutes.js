@@ -27,7 +27,9 @@ router.get('/anime', (req, res) => {
       //put all to lower case
       data = data.toLowerCase()
       //strings must be in lower case
-      let data2 = data.slice(data.indexOf('tate no yuusha no nariagari'), data.indexOf('###', data.indexOf('tate no yuusha no nariagari')))
+      let animeName = 'tate no yuusha no nariagari'
+      animeName = animeName.toLocaleLowerCase()
+      let data2 = data.slice(data.indexOf(animeName), data.indexOf('###', data.indexOf(animeName)))
       let arr = data2.split(/\r\n/g)
       // console.log(arr)
       let arr2 = []
@@ -49,7 +51,7 @@ router.get('/anime', (req, res) => {
             // splitting this way makes it so that:
             // index 0 = op/ed number, index 1 = name of song, index 5 = link to song, index 6 specifies the episodes
             let temp = arr[i].split(/"|\[|\]|\|/)
-            console.log(arr[i])
+            // console.log(arr[i])
             let obj = {
               number: temp[0],
               title: temp[1],
