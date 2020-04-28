@@ -1,6 +1,6 @@
 //variable to store user's anime search
 let anime
-
+let wikiPage
 // axios.get('/api/anime')
 // .then(({data}) => {
 //   document.getElementById('name').textContent = data[0].name
@@ -66,12 +66,20 @@ document.addEventListener('click', event => {
   else if(target.classList.contains('searchResult')){
     let parent = target.parentNode.parentNode
     console.log(parent.dataset)
-    console.log(`${parent.dataset.title} (${parent.dataset.year})`)
+    anime = `${parent.dataset.title} (${parent.dataset.year})`
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
     if (parseInt(parent.dataset.year) < 2000) {
       //get last two digits and round down to nearest 10
       let year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
       console.log(`${parent.dataset.title} (${year}s)`)
+      //run api call here to get wikipage on animeThemes
+      axios.get(`/api/animesearch/${anime}`)
+      .then( ({data}) => {
+        console.log(data)
+      })
+      .catch(err => {
+        //in case there's an error, search for the second way
+      })
     }
   }
 })
