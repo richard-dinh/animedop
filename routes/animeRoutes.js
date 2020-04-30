@@ -35,13 +35,13 @@ router.get('/animesearch/:title', (req, res) => {
 
 
 //get videos based on string
-router.get('/anime', (req, res) => {
-  r.getSubreddit('AnimeThemes').getWikiPage('2002#wiki_naruto').content_md
+router.get('/anime/:title/:wiki', (req, res) => {
+  r.getSubreddit('AnimeThemes').getWikiPage(req.params.wiki).content_md
     .then(data => {
       //put all to lower case
       data = data.toLowerCase()
       //strings must be in lower case
-      let animeName = 'naruto'
+      let animeName = req.params.title
       animeName = animeName.toLocaleLowerCase()
       let data2 = data.slice(data.indexOf(animeName), data.indexOf('###', data.indexOf(animeName)))
       let arr = data2.split(/\r\n/g)
