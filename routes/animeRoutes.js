@@ -11,23 +11,37 @@ const r = new snoowrap({
 })
 
 //get all instances of a word in a search
-router.get('/animesearch', (req, res) => {
+router.get('/animesearch/:title', (req, res) => {
   r.getSubreddit('AnimeThemes').getWikiPage('anime_index').content_md
     .then(data => {
-      res.json({ data })
+      //error checking for right title
+      if (data.indexOf(req.params.title) === -1) {
+        res.sendStatus(400)
+      }
+      else{
+        let data2 = data.split(req.params.title)[1]
+        //remove all characters starting at index 0 to first \r character
+        data2 = data2.substring(0, data2.indexOf('\r'))
+        //remove paraentheses
+        data2 = data2.replace(/\(|\)|]/g, '')
+        //split string based on / 
+        data2 = data2.split('/')
+        //return only last index of array
+        res.json({ wikiPage: data2[data2.length-1] })
+      }
     })
 })
 
 
 
 //get videos based on string
-router.get('/anime', (req, res) => {
-  r.getSubreddit('AnimeThemes').getWikiPage('2019#wiki_tate_no_yuusha_no_nariagari').content_md
+router.get('/anime/:title/:wiki', (req, res) => {
+  r.getSubreddit('AnimeThemes').getWikiPage(req.params.wiki).content_md
     .then(data => {
       //put all to lower case
       data = data.toLowerCase()
       //strings must be in lower case
-      let animeName = 'tate no yuusha no nariagari'
+      let animeName = req.params.title
       animeName = animeName.toLocaleLowerCase()
       let data2 = data.slice(data.indexOf(animeName), data.indexOf('###', data.indexOf(animeName)))
       let arr = data2.split(/\r\n/g)

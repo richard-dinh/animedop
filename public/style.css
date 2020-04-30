@@ -1,0 +1,17 @@
+.searchResult {
+  position: relative;
+  bottom: 0;
+}
+
+.cardStyle {
+  width: 10rem;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.imgStyle {
+  max-width: 50%;
+  height: auto;
+}
