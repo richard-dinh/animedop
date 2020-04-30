@@ -20,9 +20,14 @@ router.get('/animesearch/:title', (req, res) => {
       }
       else{
         let data2 = data.split(req.params.title)[1]
+        //remove all characters starting at index 0 to first \r character
         data2 = data2.substring(0, data2.indexOf('\r'))
+        //remove paraentheses
         data2 = data2.replace(/\(|\)|]/g, '')
-        res.json({ wikiPage: data2 })
+        //split string based on / 
+        data2 = data2.split('/')
+        //return only last index of array
+        res.json({ wikiPage: data2[data2.length-1] })
       }
     })
 })
@@ -31,12 +36,12 @@ router.get('/animesearch/:title', (req, res) => {
 
 //get videos based on string
 router.get('/anime', (req, res) => {
-  r.getSubreddit('AnimeThemes').getWikiPage('2019#wiki_tate_no_yuusha_no_nariagari').content_md
+  r.getSubreddit('AnimeThemes').getWikiPage('2002#wiki_naruto').content_md
     .then(data => {
       //put all to lower case
       data = data.toLowerCase()
       //strings must be in lower case
-      let animeName = 'tate no yuusha no nariagari'
+      let animeName = 'naruto'
       animeName = animeName.toLocaleLowerCase()
       let data2 = data.slice(data.indexOf(animeName), data.indexOf('###', data.indexOf(animeName)))
       let arr = data2.split(/\r\n/g)

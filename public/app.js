@@ -83,8 +83,8 @@ document.addEventListener('click', event => {
     .catch(err => {
       //in case there's an error, search for the second way the year is formatted
       axios.get(`/api/animesearch/${parent.dataset.title} (${year}s)`)
-      .then( ({data}) => {
-        console.log(data)
+      .then( ({data : {wikiPage}}) => {
+        console.log(wikiPage)
       })
       .catch( err => {
         console.error('Opening and Endings cannot be found')
