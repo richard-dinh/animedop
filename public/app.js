@@ -111,12 +111,6 @@ document.addEventListener('click', event => {
     console.log(parent.dataset)
     let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
-    if (parseInt(parent.dataset.year) < 2000) {
-      //get last two digits and round down to nearest 10
-      year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
-      // console.log(`${parent.dataset.title} (${year}s)`)
-      //run api call here to get wikipage on animeThemes
-    }
     console.log(`/api/animesearch/${parent.dataset.title} (${parent.dataset.year})`)
     axios.get(`/api/animesearch/${parent.dataset.title} (${parent.dataset.year})`)
     .then(({ data: { wikiPage } }) => {
@@ -125,6 +119,14 @@ document.addEventListener('click', event => {
     })
     .catch(err => {
       //in case there's an error, search for the second way the year is formatted
+      console.log(parent.dataset.year)
+      if (parseInt(parent.dataset.year) < 2000) {
+        //get last two digits and round down to nearest 10
+        year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
+        // console.log(`${parent.dataset.title} (${year}s)`)
+        //run api call here to get wikipage on animeThemes
+      }
+      console.log(year)
       axios.get(`/api/animesearch/${parent.dataset.title} (${year}s)`)
       .then( ({data : {wikiPage}}) => {
         console.log(wikiPage)
@@ -143,7 +145,7 @@ document.addEventListener('click', event => {
 
     document.getElementById('videoModalLabel').innerHTML = target.dataset.title
     document.getElementById('videoModalBody').innerHTML = `
-      <video autoplay controls height="100%" width="100%">
+      <video autoplay="autoplay" controls="controls" height="100%" width="100%">
         <source src="${target.dataset.link}"type="video/webm">
         Your browser does not support the video tag.
       </video>
