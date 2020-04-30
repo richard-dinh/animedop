@@ -135,4 +135,23 @@ document.addEventListener('click', event => {
       })
     })
   }
+  else if (target.classList.contains('watch')){
+    console.log(target.dataset)
+    //clear out all fields first
+    document.getElementById('videoModalLabel').innerHTML =''
+    document.getElementById('videoModalBody').innerHTML =''
+
+    document.getElementById('videoModalLabel').innerHTML = target.dataset.title
+    document.getElementById('videoModalBody').innerHTML = `
+      <video autoplay controls height="100%" preload="false" width="100%">
+        <source type="video/webm" src="${target.dataset.link}">
+      </video>
+    `
+  }
 })
+
+//stop video from continuing to play when modal is closed
+$("#videoModal").on("hidden.bs.modal", function () {
+  document.getElementById('videoModalLabel').innerHTML = ''
+  document.getElementById('videoModalBody').innerHTML = ''
+});
