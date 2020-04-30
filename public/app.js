@@ -145,7 +145,7 @@ document.addEventListener('click', event => {
 
     document.getElementById('videoModalLabel').innerHTML = target.dataset.title
     document.getElementById('videoModalBody').innerHTML = `
-      <video autoplay="autoplay" controls="controls" height="100%" width="100%">
+      <video autoplay="autoplay" controls="controls" height="100%" width="100%" preload="auto">
         <source src="${target.dataset.link}"type="video/webm">
         Your browser does not support the video tag.
       </video>
