@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const axios = require('axios')
 //bring in snoowrap
 const snoowrap = require('snoowrap')
 
@@ -10,24 +10,44 @@ const r = new snoowrap({
   refreshToken: '31646591-6tlCeQZyIo4cZfWUZDGfkd8li3k'
 })
 
+const filterWiki = (data, title) => {
+  let data2 = data.split(title)[1]
+  //remove all characters starting at index 0 to first \r character
+  data2 = data2.substring(0, data2.indexOf('\r'))
+  //remove paraentheses
+  data2 = data2.replace(/\(|\)|]/g, '')
+  //split string based on / 
+  data2 = data2.split('/')
+  return data2
+}
 //get all instances of a word in a search
-router.get('/animesearch/:title', (req, res) => {
+router.get('/animesearch/:mal_id/:title', (req, res) => {
+  let wikiString = ''
   r.getSubreddit('AnimeThemes').getWikiPage('anime_index').content_md
     .then(data => {
       //error checking for right title
       if (data.indexOf(req.params.title) === -1) {
-        res.sendStatus(400)
+        axios.get(`https://api.jikan.moe/v3/anime/${req.params.mal_id}`)
+        .then( ({data: {title_english}}) => {
+          //check data for english title as well
+          if(data.indexOf(title_english) === -1) {
+            //no titles found
+            res.sendStatus(400)
+          }
+          else{
+            //if english title was found instead
+            wikiString = filterWiki(data, title_english)
+            res.json({ wikiPage: wikiString[wikiString.length - 1], title: title_english })
+          }
+        })
+        .catch(err => {
+          res.sendStatus(400)
+        })
       }
       else{
-        let data2 = data.split(req.params.title)[1]
-        //remove all characters starting at index 0 to first \r character
-        data2 = data2.substring(0, data2.indexOf('\r'))
-        //remove paraentheses
-        data2 = data2.replace(/\(|\)|]/g, '')
-        //split string based on / 
-        data2 = data2.split('/')
-        //return only last index of array
-        res.json({ wikiPage: data2[data2.length-1] })
+        //if original title was found
+        wikiString = filterWiki(data, req.params.title)
+        res.json({ wikiPage: wikiString[wikiString.length-1], title: null })
       }
     })
 })
