@@ -39,10 +39,10 @@ router.get('/anime/:title/:wiki', (req, res) => {
   r.getSubreddit('AnimeThemes').getWikiPage(req.params.wiki).content_md
     .then(data => {
       //put all to lower case
-      data = data.toLowerCase()
+      // data = data.toLowerCase()
       //strings must be in lower case
       let animeName = req.params.title
-      animeName = animeName.toLocaleLowerCase()
+      // animeName = animeName.toLocaleLowerCase()
       let data2 = data.slice(data.indexOf(animeName), data.indexOf('###', data.indexOf(animeName)))
       let arr = data2.split(/\r\n/g)
       // console.log(arr)
@@ -61,7 +61,7 @@ router.get('/anime/:title/:wiki', (req, res) => {
         else{
           let firstTwo = arr[i].substring(0, 2)
           //if first two characters of the string are op or ed
-          if(firstTwo === 'op' || firstTwo === 'ed'){
+          if(firstTwo === 'OP' || firstTwo === 'ED'){
             // splitting this way makes it so that:
             // index 0 = op/ed number, index 1 = name of song, index 5 = link to song, index 6 specifies the episodes
             let temp = arr[i].split(/"|\[|\]|\|/)
