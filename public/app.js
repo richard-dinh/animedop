@@ -30,11 +30,14 @@ const renderResults = title => {
         //only create cards for anime that have already aired
         if (results[i].start_date !== null) {
           let animeNode = document.createElement('div')
-          //get title
+          //save title
           animeNode.dataset.title = results[i].title
-          //get the start year
+          //save the start year
           animeNode.dataset.year = results[i].start_date.substring(0, 4)
+          //save image
           animeNode.dataset.img = results[i].image_url
+          //save mal_id
+          animeNode.dataset.mal_id = results[i].mal_id
           animeNode.setAttribute('class', 'card col-sm-6 col-md-4 cardStyle')
           animeNode.innerHTML = `
           <img src="${results[i].image_url}" class="card-img-top" alt="${results[i].title} placeholder">
@@ -111,11 +114,11 @@ document.addEventListener('click', event => {
     console.log(parent.dataset)
     let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
-    console.log(`/api/animesearch/${parent.dataset.title} (${parent.dataset.year})`)
-    axios.get(`/api/animesearch/${parent.dataset.title} (${parent.dataset.year})`)
-    .then(({ data: { wikiPage } }) => {
+    console.log(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
+    axios.get(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
+    .then(({ data: { wikiPage, title } }) => {
       console.log(wikiPage)
-      getOpAndEd(wikiPage, parent.dataset.title, parent.dataset.img)
+      getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
     })
     .catch(err => {
       //in case there's an error, search for the second way the year is formatted
@@ -127,10 +130,10 @@ document.addEventListener('click', event => {
         //run api call here to get wikipage on animeThemes
       }
       console.log(year)
-      axios.get(`/api/animesearch/${parent.dataset.title} (${year}s)`)
-      .then( ({data : {wikiPage}}) => {
+      axios.get(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${year}s)`)
+      .then( ({data : {wikiPage, title}}) => {
         console.log(wikiPage)
-        getOpAndEd(wikiPage, parent.dataset.title, parent.dataset.img)
+        getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
       })
       .catch( err => {
         console.error('Opening and Endings cannot be found')
