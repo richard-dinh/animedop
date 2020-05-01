@@ -75,7 +75,7 @@ const generateList = arr => {
 
 //function to get Op and Endings
 const getOpAndEd = (wiki, title, img) => {
-  axios.get(`api/anime/${title.toLowerCase()}/${wiki}`)
+  axios.get(`api/anime/${title}/${wiki}`)
   .then( ({data}) => {
     //clear out results field
     document.getElementById('results').innerHTML = ''
