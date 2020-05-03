@@ -78,12 +78,11 @@ const generateList = arr => {
 
 //function to get Op and Endings
 const getOpAndEd = (wiki, title, img) => {
-  axios.get(`api/anime/${title}/${wiki}`)
+  console.log(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
+  axios.get(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
   .then( ({data}) => {
     //clear out results field
     document.getElementById('results').innerHTML = ''
-
-
     let animeNode = document.createElement('div')
     animeNode.setAttribute('class', 'card col-md-12')
     animeNode.innerHTML = `
@@ -115,7 +114,7 @@ document.addEventListener('click', event => {
     let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
     console.log(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
-    axios.get(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
+    axios.get(`/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(parent.dataset.title)} (${parent.dataset.year})`)
     .then(({ data: { wikiPage, title } }) => {
       console.log(wikiPage)
       getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
@@ -130,7 +129,7 @@ document.addEventListener('click', event => {
         //run api call here to get wikipage on animeThemes
       }
       console.log(year)
-      axios.get(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${year}s)`)
+      axios.get(`/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(parent.dataset.title)} (${year}s)`)
       .then( ({data : {wikiPage, title}}) => {
         console.log(wikiPage)
         getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)

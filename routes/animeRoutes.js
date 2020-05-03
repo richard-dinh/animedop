@@ -23,10 +23,11 @@ const filterWiki = (data, title) => {
 //get all instances of a word in a search
 router.get('/animesearch/:mal_id/:title', (req, res) => {
   let wikiString = ''
+  let animeName = decodeURIComponent(req.params.title)
   r.getSubreddit('AnimeThemes').getWikiPage('anime_index').content_md
     .then(data => {
       //error checking for right title
-      if (data.indexOf(req.params.title) === -1) {
+      if (data.indexOf(animeName) === -1) {
         axios.get(`https://api.jikan.moe/v3/anime/${req.params.mal_id}`)
         .then( ({data: {title_english}}) => {
           //check data for english title as well
@@ -56,12 +57,12 @@ router.get('/animesearch/:mal_id/:title', (req, res) => {
 
 //get videos based on string
 router.get('/anime/:title/:wiki', (req, res) => {
+  let animeName = decodeURIComponent(req.params.title)
   r.getSubreddit('AnimeThemes').getWikiPage(req.params.wiki).content_md
     .then(data => {
       //put all to lower case
       // data = data.toLowerCase()
       //strings must be in lower case
-      let animeName = req.params.title
       // animeName = animeName.toLocaleLowerCase()
       let data2 = data.slice(data.indexOf(animeName), data.indexOf('###', data.indexOf(animeName)))
       let arr = data2.split(/\r\n/g)
