@@ -110,7 +110,6 @@ document.addEventListener('click', event => {
   }
   else if(target.classList.contains('searchResult')){
     let parent = target.parentNode.parentNode
-    console.log(parent.dataset)
     let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
     console.log(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
