@@ -10,4 +10,4 @@ app.use(express.static(join(__dirname, 'public')))
 //bring in routes
 app.use(require('./routes'))
 
-app.listen(process.env.PORT || 3000)
+app.listen(process.env.PORT || 3001)
