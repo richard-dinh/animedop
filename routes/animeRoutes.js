@@ -102,4 +102,7 @@ router.get('/anime/:title/:wiki', (req, res) => {
     })
 })
 
+router.get('/test', (req, res) => {
+  res.json({message: 'test'})
+})
 module.exports = router
