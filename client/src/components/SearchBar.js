@@ -23,7 +23,7 @@ function SearchBar() {
         params: {
           part: 'snippet',
           maxResults: 5,
-          key: 'AIzaSyB8SyijtV2kj8thLIyKj-04ZtkU3BeS2dA',
+          key: 'API KEY OMITTED',
           type: 'video',
           q: query,
         },
