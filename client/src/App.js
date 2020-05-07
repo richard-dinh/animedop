@@ -5,6 +5,7 @@ import { SearchBar, VideoDetail, VideoList } from './components'
 import { VideoProvider } from './context/VideoContext'
 import { useMediaQuery } from './components/MediaQuery'
 function App() {
+  //checking for screen width
   const isNotMobile = useMediaQuery('(min-width: 882px')
 
   const styleVideoList = {

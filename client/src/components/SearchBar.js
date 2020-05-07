@@ -5,11 +5,15 @@ import youtube from './../api/youtube'
 // Paper = Raised Div
 import { Paper, TextField } from '@material-ui/core'
 function SearchBar() {
-  const { valueQuery, valueVideos, valueVideoSelected } = useContext(
+  //object destructing with array destructing for setState functions
+  const { valueQuery, valueVideos : [, setVideos], valueVideoSelected : [, setVideoSelected] } = useContext(
     VideoContext
   )
-  const setVideos = valueVideos[1]
-  const setVideoSelected = valueVideoSelected[1]
+  // console.log(valueVideos)
+  //bring in setVideos function from VideoProvider
+  // const setVideos = valueVideos[1]
+  //bring in setVideoSelected function from VideoProvider
+  // const setVideoSelected = valueVideoSelected[1]
   const [search, setSearch] = useState('')
   const [query, setQuery] = valueQuery
 
@@ -19,11 +23,11 @@ function SearchBar() {
         params: {
           part: 'snippet',
           maxResults: 5,
-          key: 'OMITTED API KEY',
+          key: 'AIzaSyB8SyijtV2kj8thLIyKj-04ZtkU3BeS2dA',
           type: 'video',
           q: query,
         },
-      })
+      }, [])
 
       setSearch('')
 

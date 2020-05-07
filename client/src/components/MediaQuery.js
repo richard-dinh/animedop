@@ -8,7 +8,7 @@ export const useMediaQuery = (query) => {
     const handler = (e) => setMatches(e.matches)
     mediaMatch.addListener(handler)
     return () => mediaMatch.removeListener(handler)
-  })
+  }, [])
 
   return matches
 }

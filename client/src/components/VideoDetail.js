@@ -15,7 +15,7 @@ const VideoDetail = () => {
   if (!videoSelected) return <div>Loading...</div>
   const videoSrc = `https://www.youtube.com/watch?v=${videoSelected.id.videoId}`
   return (
-    <React.Fragment>
+    <>
       <Paper elevation={6} style={{ height: '80%' }}>
         {/* <Grid spacing={4}>
           <Grid items xs={12}> */}
@@ -38,7 +38,7 @@ const VideoDetail = () => {
           {videoSelected.snippet.description}
         </Typography>
       </Paper>
-    </React.Fragment>
+    </>
   )
 }
 

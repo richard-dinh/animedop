@@ -18,7 +18,7 @@ const VideoItem = ({ video, onVideoSelected }) => {
         onClick={playSelectedVideo}
       >
         <Grid container spacing={4}>
-          <Grid item xs={7}>
+          <Grid item md={7} xs={12}>
             <img
               src={video.snippet.thumbnails.medium.url}
               alt='thumbnail'
@@ -26,7 +26,7 @@ const VideoItem = ({ video, onVideoSelected }) => {
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item md={4} xs={12}>
             <Typography variant='subtitle2'>
               <b>{video.snippet.title}</b>
             </Typography>
