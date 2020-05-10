@@ -19,10 +19,11 @@ let wikiPage
 // })
 // .catch(err => console.err(err))
 
-const renderResults = title => {
+const renderResults = (title) => {
   //empty out results
   document.getElementById('results').innerHTML = ''
-  axios.get(`https://api.jikan.moe/v3/search/anime?q=${title}&limit=30`)
+  axios
+    .get(`https://api.jikan.moe/v3/search/anime?q=${title}&limit=30`)
     .then(({ data: { results } }) => {
       //jikan returns the anime titles in the results key
       console.log(results)
@@ -55,15 +56,15 @@ const renderResults = title => {
         }
       }
     })
-    .catch(err => console.error(err))
+    .catch((err) => console.error(err))
 }
 
 //function to generate the list items to hold the op and endings of each anime
-const generateList = arr => {
+const generateList = (arr) => {
   //create a variable to hold string for li in card body
-  let listString =''
+  let listString = ''
   let temp
-  for(let i = 1; i< arr.length; i++){
+  for (let i = 1; i < arr.length; i++) {
     temp = `
     <li class="list-group-item">
       <button type="button" class="btn btn-primary watch" data-toggle="modal" data-target="#videoModal" data-title = "${arr[i].title}" data-link="${arr[i].link}">
@@ -78,14 +79,17 @@ const generateList = arr => {
 
 //function to get Op and Endings
 const getOpAndEd = (wiki, title, img) => {
-  console.log(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
-  axios.get(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
-  .then( ({data}) => {
-    //clear out results field
-    document.getElementById('results').innerHTML = ''
-    let animeNode = document.createElement('div')
-    animeNode.setAttribute('class', 'card col-md-12')
-    animeNode.innerHTML = `
+  console.log(
+    `api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`
+  )
+  axios
+    .get(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
+    .then(({ data }) => {
+      //clear out results field
+      document.getElementById('results').innerHTML = ''
+      let animeNode = document.createElement('div')
+      animeNode.setAttribute('class', 'card col-md-12')
+      animeNode.innerHTML = `
       <img src="${img}" class="card-img-top imgStyle" alt="${title}">
       <div class="card-body">
         <h5 class="card-title">${title}</h5>
@@ -94,55 +98,74 @@ const getOpAndEd = (wiki, title, img) => {
       ${generateList(data)}
       </ul>
     `
-    document.getElementById('results').append(animeNode)
-  })
-  .catch(err => console.error(err))
+      document.getElementById('results').append(animeNode)
+    })
+    .catch((err) => console.error(err))
 }
 
 //event listener on all searchResults
-document.addEventListener('click', event => {
+document.addEventListener('click', (event) => {
   let target = event.target
-  if(target.id === 'submit') {
+  if (target.id === 'submit') {
     event.preventDefault()
     renderResults(document.getElementById('search').value)
     //empty out user input
     document.getElementById('search').value = ''
-  }
-  else if(target.classList.contains('searchResult')){
+  } else if (target.classList.contains('searchResult')) {
     let parent = target.parentNode.parentNode
     let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
-    console.log(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
-    axios.get(`/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(parent.dataset.title)} (${parent.dataset.year})`)
-    .then(({ data: { wikiPage, title } }) => {
-      console.log(wikiPage)
-      getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
-    })
-    .catch(err => {
-      //in case there's an error, search for the second way the year is formatted
-      console.log(parent.dataset.year)
-      if (parseInt(parent.dataset.year) < 2000) {
-        //get last two digits and round down to nearest 10
-        year = Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
-        // console.log(`${parent.dataset.title} (${year}s)`)
-        //run api call here to get wikipage on animeThemes
-      }
-      console.log(year)
-      axios.get(`/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(parent.dataset.title)} (${year}s)`)
-      .then( ({data : {wikiPage, title}}) => {
+    console.log(
+      `/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`
+    )
+    axios
+      .get(
+        `/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(
+          parent.dataset.title
+        )} (${parent.dataset.year})`
+      )
+      .then(({ data: { wikiPage, title } }) => {
         console.log(wikiPage)
-        getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
+        getOpAndEd(
+          wikiPage,
+          title ? title : parent.dataset.title,
+          parent.dataset.img
+        )
       })
-      .catch( err => {
-        console.error('Opening and Endings cannot be found')
+      .catch((err) => {
+        //in case there's an error, search for the second way the year is formatted
+        console.log(parent.dataset.year)
+        if (parseInt(parent.dataset.year) < 2000) {
+          //get last two digits and round down to nearest 10
+          year =
+            Math.floor(parseInt(parent.dataset.year.substring(2)) / 10) * 10
+          // console.log(`${parent.dataset.title} (${year}s)`)
+          //run api call here to get wikipage on animeThemes
+        }
+        console.log(year)
+        axios
+          .get(
+            `/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(
+              parent.dataset.title
+            )} (${year}s)`
+          )
+          .then(({ data: { wikiPage, title } }) => {
+            console.log(wikiPage)
+            getOpAndEd(
+              wikiPage,
+              title ? title : parent.dataset.title,
+              parent.dataset.img
+            )
+          })
+          .catch((err) => {
+            console.error('Opening and Endings cannot be found')
+          })
       })
-    })
-  }
-  else if (target.classList.contains('watch')){
+  } else if (target.classList.contains('watch')) {
     console.log(target.dataset)
     //clear out all fields first
-    document.getElementById('videoModalLabel').innerHTML =''
-    document.getElementById('videoModalBody').innerHTML =''
+    document.getElementById('videoModalLabel').innerHTML = ''
+    document.getElementById('videoModalBody').innerHTML = ''
 
     document.getElementById('videoModalLabel').innerHTML = target.dataset.title
     document.getElementById('videoModalBody').innerHTML = `
@@ -155,7 +178,7 @@ document.addEventListener('click', event => {
 })
 
 //stop video from continuing to play when modal is closed
-$("#videoModal").on("hidden.bs.modal", function () {
+$('#videoModal').on('hidden.bs.modal', function () {
   document.getElementById('videoModalLabel').innerHTML = ''
   document.getElementById('videoModalBody').innerHTML = ''
-});
+})

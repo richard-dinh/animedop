@@ -5,10 +5,10 @@ export const VideoContext = createContext()
 export const VideoProvider = ({ children }) => {
   const [videos, setVideos] = useState([])
   const [videoSelected, setVideoSelected] = useState('')
-  const [query, setQuery] = useState('Shield Hero Ed 1')
+  const [query, setQuery] = useState('Tate No Yuusha No Nariagari')
 
   const onVideoSelected = (video) => {
-    setVideoSelected(video)
+    setVideoSelected(video.link)
     setQuery(query)
   }
 

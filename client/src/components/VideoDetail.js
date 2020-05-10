@@ -13,7 +13,8 @@ const VideoDetail = () => {
   const { valueVideoSelected } = useContext(VideoContext)
   const videoSelected = valueVideoSelected[0]
   if (!videoSelected) return <div>Loading...</div>
-  const videoSrc = `https://www.youtube.com/watch?v=${videoSelected.id.videoId}`
+  // const videoSrc = `https://www.youtube.com/watch?v=${videoSelected.id.videoId}`
+  const videoSrc = `${videoSelected}`
   return (
     <React.Fragment>
       <Paper elevation={6} style={{ height: '80%' }}>
@@ -29,7 +30,7 @@ const VideoDetail = () => {
         {/* </Grid>
         </Grid> */}
       </Paper>
-      <Paper elevation={6} style={{ padding: '15px' }}>
+      {/* <Paper elevation={6} style={{ padding: '15px' }}>
         <Typography variant='h4'>{videoSelected.snippet.title}</Typography>
         <Typography variant='subtitle1'>
           {videoSelected.snippet.channelTitle}
@@ -37,7 +38,7 @@ const VideoDetail = () => {
         <Typography variant='subtitle2'>
           {videoSelected.snippet.description}
         </Typography>
-      </Paper>
+      </Paper> */}
     </React.Fragment>
   )
 }
