@@ -3,6 +3,7 @@ import React, { useState, createContext } from 'react'
 export const VideoContext = createContext()
 
 export const VideoProvider = ({ children }) => {
+  const [animes, setAnimes] = useState([])
   const [videos, setVideos] = useState([])
   const [videoSelected, setVideoSelected] = useState('')
   const [query, setQuery] = useState('Tate No Yuusha No Nariagari')
@@ -15,6 +16,7 @@ export const VideoProvider = ({ children }) => {
   return (
     <VideoContext.Provider
       value={{
+        valueAnimes: [animes, setAnimes],
         valueVideos: [videos, setVideos],
         valueVideoSelected: [videoSelected, setVideoSelected],
         valueQuery: [query, setQuery],
