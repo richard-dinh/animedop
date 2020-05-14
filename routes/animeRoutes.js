@@ -56,7 +56,7 @@ router.get('/animesearch/:mal_id/:title', (req, res) => {
 
 
 //get videos based on string
-router.get('/anime/:title/:wiki', (req, res) => {
+router.get('/anime/:title/:wiki', async (req, res) => {
   let animeName = decodeURIComponent(req.params.title)
   r.getSubreddit('AnimeThemes').getWikiPage(req.params.wiki).content_md
     .then(data => {
@@ -105,4 +105,13 @@ router.get('/anime/:title/:wiki', (req, res) => {
 router.get('/test', (req, res) => {
   res.json({message: 'test'})
 })
+
+//async await test route
+router.get('/test2', async (req, res) => {
+
+  let data = await r.getSubreddit('AnimeThemes').getWikiPage('2019#wiki_tate_no_yuusha_no_nariagari').content_md
+  res.json(data)
+})
+
+
 module.exports = router

@@ -8,7 +8,7 @@ router.get('/youtube', (req, res) => {
     auth: process.env.YOUTUBE,
     part: 'snippet',
     type: 'video',
-    q: 'Shield Hero Ending 1'
+    q: 'trang sucks'
   })
   .then( ({data : {items}}) => {
     // console.log(data)

@@ -18,7 +18,6 @@ let wikiPage
 //   }
 // })
 // .catch(err => console.err(err))
-
 const renderResults = title => {
   //empty out results
   document.getElementById('results').innerHTML = ''
