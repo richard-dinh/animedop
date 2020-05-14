@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
   },
   heroButtons: {
     marginTop: theme.spacing(4),
+  },
+  background: {
+    backgroundColor: '#4caf50',
   }
 }))
 
@@ -24,7 +27,7 @@ const Heading = () => {
   const classes = useStyles()
   return (
     <>
-    <AppBar position="relative">
+    <AppBar position="relative" className = {classes.background}>
       <Toolbar>
         <PolicyIcon className={classes.icon} />
         <Typography variant="h6" color="inherit" noWrap>
