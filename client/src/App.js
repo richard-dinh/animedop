@@ -4,6 +4,7 @@ import Home from './views/Home.js'
 import AnimeList from './views/AnimeList.js' 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import AnimeContext from './utils/context/AnimeContext.js'
+import {Heading} from './components/index.js'
 function App() {
 
   const [animeState, setAnimeState] = useState({
@@ -15,6 +16,7 @@ function App() {
   return (
     <AnimeContext.Provider value = {animeState}>
       <Router>
+      <Heading />
         <Switch>
           <Route exact path = '/anime/:title'>
             <AnimeList />

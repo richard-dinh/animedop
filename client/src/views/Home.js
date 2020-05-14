@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       <CssBaseline />
-      <Heading />
+      {/* <Heading /> */}
     </>
   );
 }

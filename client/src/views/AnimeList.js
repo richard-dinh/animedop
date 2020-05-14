@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { AnimeCard, Heading } from '../components/index'
+import AnimeContext from '../utils/context/AnimeContext.js'
 
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
@@ -18,18 +19,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = () => {
-  const classes = useStyles();
+  const classes = useStyles()
+
+  //bring in context
+  const {title} = useContext(AnimeContext)
+
+  const [animeList, setAnimeList] = useState([])
 
   return (
     <>
       <CssBaseline />
-      <Heading />
+      {/* <Heading /> */}
       <main>
         <Container className={classes.cardGrid} maxWidth="md">
           <Grid continer spacing = {4}>
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom>
-                Search Results For: 
+                Search Results For: {title}
               </Typography>
             </Grid>
           </Grid>

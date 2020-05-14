@@ -39,17 +39,20 @@ const SearchBar = () => {
   const handleInputChange = event => {
     setSearch(event.target.value)
   }
+
   const handleSubmit = event => {
     event.preventDefault()
     updateTitle(search)
-    setSearch('')
   }
+
+  //runs when title is updated
   useEffect(()=> {
-    //runs when title is updated
+    //empty our search
+    setSearch('')
     //pushes user to route
     history.push(`/anime/${title}`)
   }, [title])
-  
+
   return (
     <Paper component="form" className={classes.root} onSubmit = {handleSubmit}>
       <InputBase
