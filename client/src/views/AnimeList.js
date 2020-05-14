@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { AnimeCard, Heading } from '../components/index'
 import AnimeContext from '../utils/context/AnimeContext.js'
-
+import jikanAPI from '../utils/api/jikanAPI'
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -26,6 +26,17 @@ const Home = () => {
 
   const [animeList, setAnimeList] = useState([])
 
+  //run when title is updated
+  useEffect(() => {
+    jikanAPI.getAnime(title)
+    .then( ({data :{results}}) => {
+      //filter results for anime that have a start date (only getting anime that have already aired)
+      results = results.filter(anime => anime.start_date)
+      setAnimeList(results)
+    })
+    .catch(err => console.error(err))
+  }, [title])
+
   return (
     <>
       <CssBaseline />
@@ -41,7 +52,7 @@ const Home = () => {
           </Grid>
           <Grid container spacing={4}>
             {/* Maps card here */}
-            <AnimeCard />
+            <AnimeCard list = {animeList}/>
           </Grid>
         </Container>
       </main>
