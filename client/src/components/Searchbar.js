@@ -4,7 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-
+import {useHistory} from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
@@ -27,14 +27,17 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchBar = () => {
   const classes = useStyles();
+  let history = useHistory()
   const [search, setSearch] = useState('')
   const handleInputChange = event => {
     setSearch(event.target.value)
   }
   const handleSubmit = event => {
     event.preventDefault()
-    console.log(search)
+    let title = search
     setSearch('')
+    //pushes user to route
+    history.push(`/anime/${title}`)
   }
   return (
     <Paper component="form" className={classes.root} onSubmit = {handleSubmit}>
