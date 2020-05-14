@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import {useHistory} from 'react-router-dom'
+import AnimeContext from '../utils/context/AnimeContext.js'
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
@@ -27,18 +28,28 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchBar = () => {
   const classes = useStyles();
+  //use history for redirecting
   let history = useHistory()
+
+  //state to hold search string
   const [search, setSearch] = useState('')
+
+  //bring in animeContext to store title
+  const {title, updateTitle} = useContext(AnimeContext)
   const handleInputChange = event => {
     setSearch(event.target.value)
   }
   const handleSubmit = event => {
     event.preventDefault()
-    let title = search
+    updateTitle(search)
     setSearch('')
+  }
+  useEffect(()=> {
+    //runs when title is updated
     //pushes user to route
     history.push(`/anime/${title}`)
-  }
+  }, [title])
+  
   return (
     <Paper component="form" className={classes.root} onSubmit = {handleSubmit}>
       <InputBase

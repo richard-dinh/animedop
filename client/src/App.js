@@ -10,7 +10,7 @@ function App() {
     title: ''
   })
   animeState.updateTitle = title => {
-    setAnimeState({... animeState, title})
+    setAnimeState({...animeState, title})
   }
   return (
     <AnimeContext.Provider value = {animeState}>
