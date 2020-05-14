@@ -5,8 +5,8 @@ function App() {
   //checking for screen width
 
   return (
-    <Home>
-    </Home>
+    <Home/>
+
   )
 }
 
