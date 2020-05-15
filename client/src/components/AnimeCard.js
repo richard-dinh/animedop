@@ -15,14 +15,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '150%',
+    //when screen is in mobile view, changes image size
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: '80%'
+    }
   },
   cardContent: {
     flexGrow: 1,
   }
 }))
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const AnimeCard = props => {
   const classes = useStyles()
@@ -31,7 +34,7 @@ const AnimeCard = props => {
     <>
     {
       animeList.map((anime) => (
-        <Grid item key={anime} xs={12} sm={6} md={4}>
+        <Grid item key={anime.title} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             <CardMedia
               className={classes.cardMedia}
@@ -39,7 +42,7 @@ const AnimeCard = props => {
               title={anime.title}
             />
             <CardContent className={classes.cardContent}>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography gutterBottom variant="h6" component="h2">
                 {anime.title}
               </Typography>
             </CardContent>
