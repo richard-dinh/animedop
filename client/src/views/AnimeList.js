@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { AnimeCard, Heading } from '../components/index'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import {useHistory} from 'react-router-dom'
-import jikanAPI from '../utils/api/jikanAPI'
+import API from '../utils/api/api'
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -34,11 +34,11 @@ const Home = () => {
       history.push('/')
     }
     else{
-      console.log('ur mum')
-      jikanAPI.getAnime(title)
+      API.jikan(title)
       .then( ({data :{results}}) => {
         //filter results for anime that have a start date (only getting anime that have already aired)
         results = results.filter(anime => anime.start_date)
+        console.log(results)
         setAnimeList(results)
       })
       .catch(err => console.error(err))

@@ -26,7 +26,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
+const handleWatch = (mal_id, title) => {
+  console.log(mal_id, title)
+}
 const AnimeCard = props => {
   const classes = useStyles()
   const animeList = props.list
@@ -47,7 +49,7 @@ const AnimeCard = props => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" color="primary">
+              <Button size="small" color="primary" onClick = {() => handleWatch(anime.mal_id, anime.title)}>
                 Watch Op / Ed
               </Button>
               <Button size="small" color="primary">
