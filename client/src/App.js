@@ -9,14 +9,14 @@ import {Heading} from './components/index.js'
 function App() {
 
   const [animeState, setAnimeState] = useState({
-    title: localStorage.getItem('title') ? localStorage.getItem('title') : null,
+    search: localStorage.getItem('search') ? localStorage.getItem('search') : null,
     videos: [],
     wikiPage: null,
     finalTitle: null
   })
-  animeState.updateTitle = title => {
-    setAnimeState({...animeState, title})
-    localStorage.setItem('title', title)
+  animeState.updateSearch = search => {
+    setAnimeState({...animeState, search})
+    localStorage.setItem('search', search)
   }
   animeState.updateVideos = videos => {
     setAnimeState({...animeState, videos})

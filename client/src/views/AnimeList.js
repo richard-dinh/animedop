@@ -24,17 +24,17 @@ const Home = () => {
 
   const history = useHistory()
   //bring in context
-  const {title} = useContext(AnimeContext)
+  const {search} = useContext(AnimeContext)
 
   const [animeList, setAnimeList] = useState([])
 
-  //run when title is updated
+  //run when search is updated
   useEffect(() => {
-    if (!title) {
+    if (!search) {
       history.push('/')
     }
     else{
-      API.jikan(title)
+      API.jikan(search)
       .then( ({data :{results}}) => {
         //filter results for anime that have a start date (only getting anime that have already aired)
         results = results.filter(anime => anime.start_date)
@@ -43,7 +43,7 @@ const Home = () => {
       })
       .catch(err => console.error(err))
     }
-  }, [title])
+  }, [search])
 
   return (
     <>
@@ -54,7 +54,7 @@ const Home = () => {
           <Grid container spacing = {4}>
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom>
-                Search Results For: {title}
+                Search Results For: {search}
               </Typography>
             </Grid>
           </Grid>

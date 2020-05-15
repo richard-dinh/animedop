@@ -1,12 +1,12 @@
 import {createContext} from 'react'
 
 const AnimeContext = createContext({
-  title: null,
+  search: null,
   videos: [],
   wikiPage: null,
   //final title to search anime on wikiPage
   finalTitle: null,
-  updateTitle: () => {},
+  updateSearch: () => {},
   updateVideos: () => {},
   updateWikiPage: () => {},
   updateFinalTitle: () => {}

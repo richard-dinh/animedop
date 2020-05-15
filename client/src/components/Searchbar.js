@@ -32,28 +32,28 @@ const SearchBar = () => {
   let history = useHistory()
 
   //state to hold search string
-  const [search, setSearch] = useState('')
+  const [userInput, setUserInput] = useState('')
 
   //bring in animeContext to store title
-  const {title, updateTitle} = useContext(AnimeContext)
+  const {search, updateSearch} = useContext(AnimeContext)
   const handleInputChange = event => {
-    setSearch(event.target.value)
+    setUserInput(event.target.value)
   }
 
   const handleSubmit = event => {
     event.preventDefault()
-    updateTitle(search)
+    updateSearch(userInput)
   }
 
-  //runs when title is updated
+  //runs when search is updated
   useEffect(()=> {
-    if(title){
+    if(search){
       //empty our search
       //pushes user to route
-      setSearch('')
-      history.push(`/search/${title}`)
+      setUserInput('')
+      history.push(`/search/${search}`)
     }
-  }, [title])
+  }, [search])
 
   return (
     <Paper component="form" className={classes.root} onSubmit = {handleSubmit}>

@@ -4,10 +4,10 @@ import AnimeContext from '../utils/context/AnimeContext.js'
 
 const Home = () => {
 
-  const {updateTitle} = useContext(AnimeContext)
+  const {updateSearch} = useContext(AnimeContext)
   useEffect(()=> { 
-    updateTitle(null)
-    localStorage.removeItem('title')
+    updateSearch(null)
+    localStorage.removeItem('search')
     }, [])
 
   return (
