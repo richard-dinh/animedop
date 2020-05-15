@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
+import API from '../utils/api/api.js'
 const useStyles = makeStyles((theme) => ({
   card: {
     height: '100%',
@@ -27,7 +27,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const handleWatch = (mal_id, title) => {
-  console.log(mal_id, title)
+  API.getWiki(mal_id, title)
+  .then( ({response}) => {
+    console.log(response)
+    //if english title is returned due to title not being found in reddit wiki
+    if(response.title){
+
+    }
+  })
+  .catch(err => console.error(err))
 }
 const AnimeCard = props => {
   const classes = useStyles()
