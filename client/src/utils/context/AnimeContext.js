@@ -4,12 +4,13 @@ const AnimeContext = createContext({
   search: null,
   videos: [],
   wikiPage: null,
-  //final title to search anime on wikiPage
-  finalTitle: null,
+  //title to search anime on wikiPage
+  title: null,
+  mal_id: null,
   updateSearch: () => {},
   updateVideos: () => {},
   updateWikiPage: () => {},
-  updateFinalTitle: () => {}
+  updateTitleAndMAL: () => {},
 })
 
 export default AnimeContext

@@ -62,7 +62,7 @@ const SearchBar = () => {
         name = "search"
         onChange = {handleInputChange}
         placeholder="Search Anime"
-        value = {search}
+        value = {userInput}
       />
       <IconButton type="submit" className={classes.iconButton} aria-label="search">
         <SearchIcon />

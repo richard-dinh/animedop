@@ -12,7 +12,8 @@ function App() {
     search: localStorage.getItem('search') ? localStorage.getItem('search') : null,
     videos: [],
     wikiPage: null,
-    finalTitle: null
+    title: null,
+    mal_id: null
   })
   animeState.updateSearch = search => {
     setAnimeState({...animeState, search})
@@ -24,8 +25,8 @@ function App() {
   animeState.updateWikiPage = wikiPage => {
     setAnimeState({...animeState, wikiPage})
   }
-  animeState.updateFinalTitle = finalTitle => {
-    setAnimeState({...animeState, finalTitle})
+  animeState.updateTitleAndMAL = (mal_id, title) => {
+    setAnimeState({ ...animeState, mal_id, title})
   }
   return (
     <AnimeContext.Provider value = {animeState}>

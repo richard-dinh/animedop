@@ -24,7 +24,7 @@ const Home = () => {
 
   const history = useHistory()
   //bring in context
-  const {search} = useContext(AnimeContext)
+  const {search, mal_id, title} = useContext(AnimeContext)
 
   const [animeList, setAnimeList] = useState([])
 
@@ -45,6 +45,12 @@ const Home = () => {
     }
   }, [search])
 
+  useEffect(() => {
+    console.log(title, mal_id)
+    if(title){
+      history.push(`/watch/${title}`)
+    }
+  }, [title, mal_id])
   return (
     <>
       <CssBaseline />
