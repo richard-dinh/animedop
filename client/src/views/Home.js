@@ -1,20 +1,20 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import {AnimeCard, Heading} from '../components/index'
-
+import AnimeContext from '../utils/context/AnimeContext.js'
 
 const Home = () => {
+
+  const {updateTitle} = useContext(AnimeContext)
+  useEffect(()=> { 
+    updateTitle(null)
+    localStorage.removeItem('title')
+    }, [])
 
   return (
     <>
       <CssBaseline />
-      {/* <Heading /> */}
     </>
-  );
+  )
 }
 
 export default Home

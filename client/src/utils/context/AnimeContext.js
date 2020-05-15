@@ -1,7 +1,7 @@
 import {createContext} from 'react'
 
 const AnimeContext = createContext({
-  title: '',
+  title: null,
   updateTitle: () => {}
 })
 

@@ -47,10 +47,12 @@ const SearchBar = () => {
 
   //runs when title is updated
   useEffect(()=> {
-    //empty our search
-    setSearch('')
-    //pushes user to route
-    history.push(`/anime/${title}`)
+    if(title){
+      //empty our search
+      //pushes user to route
+      setSearch('')
+      history.push(`/search/${title}`)
+    }
   }, [title])
 
   return (

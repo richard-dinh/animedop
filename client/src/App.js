@@ -8,20 +8,21 @@ import {Heading} from './components/index.js'
 function App() {
 
   const [animeState, setAnimeState] = useState({
-    title: ''
+    title: localStorage.getItem('title') ? localStorage.getItem('title') : null
   })
   animeState.updateTitle = title => {
     setAnimeState({...animeState, title})
+    localStorage.setItem('title', title)
   }
   return (
     <AnimeContext.Provider value = {animeState}>
       <Router>
       <Heading />
         <Switch>
-          <Route exact path = '/anime/:title'>
+          <Route exact path = '/search/:title'>
             <AnimeList />
           </Route>
-          <Route path = '/themes/:title'>
+          <Route exact path = '/watch/:title'>
             <p>Theme Route</p>
           </Route>
           <Route path = '/'>
