@@ -13,13 +13,19 @@ const resultsJikanFromTitle = (title) => {
 
 //function to get Op and Endings
 const getOpAndEd = async (wiki, title, img) => {
-  console.log(
-    `2: /api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`
-  )
-  let { data } = await axios.get(
-    `/api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`
-  )
-  return data
+  try {
+    console.log(
+      `2: /api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`
+    )
+    let { data } = await axios.get(
+      `/api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`
+    )
+    console.log(`getOpAndEd: data - ${JSON.stringify(data)}`)
+    return data
+  } catch (error) {
+    console.log('11111111111111111111111  EROORORR')
+    console.log(error.message)
+  }
 }
 
 // const getOpAndEd = (wiki, title, img) => {
@@ -96,7 +102,8 @@ const getOpAndEd = async (wiki, title, img) => {
 //   // })
 // }
 
-const songsByAnimeTitleYear = async (title, mal_id, year, img) => {
+// Good
+const songsByAnimeTitleYear2 = async (title, mal_id, year, img) => {
   //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
   console.log(`1: /api/animesearch/${mal_id}/${title} (${year})`)
   const {
@@ -107,44 +114,68 @@ const songsByAnimeTitleYear = async (title, mal_id, year, img) => {
   return wikiPage
 }
 
-// const songsByAnimeTitleYear = (title, mal_id, year, img) => {
-//   //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
-//   console.log(`/api/animesearch/${mal_id}/${title} (${year})`)
-//   return (
-//     axios
-//       .get(`/api/animesearch/${mal_id}/${encodeURIComponent(title)} (${year})`)
-//       // .then(async ({ data: { wikiPage } }) => {
-//       //   console.log(wikiPage)
-//       //   var x = await getOpAndEd(wikiPage, title ? title : title, img)
-//       //   return x
-//       .then(async ({ data: { wikiPage } }) => {
-//         console.log(wikiPage)
-//         var x = await getOpAndEd(wikiPage, title ? title : title, img)
-//         return x
-//       })
-//       .catch((err) => {
-//         //in case there's an error, search for the second way the year is formatted
-//         console.log(year)
-//         if (parseInt(year) < 2000) {
-//           //get last two digits and round down to nearest 10
-//           year = Math.floor(parseInt(year.substring(2)) / 10) * 10
-//           // console.log(`${parent.dataset.title} (${year}s)`)
-//           //run api call here to get wikipage on animeThemes
-//         }
-//         console.log(year)
-//         axios
-//           .get(
-//             `/api/animesearch/${mal_id}/${encodeURIComponent(title)} (${year}s)`
-//           )
-//           .then(({ data: { wikiPage } }) => {
-//             console.log(wikiPage)
-//             getOpAndEd(wikiPage, title ? title : title, img)
-//           })
-//           .catch((err) => {
-//             console.error('Opening and Endings cannot be found')
-//           })
-//       })
-//   )
-// }
+const songsByAnimeTitleYear = async (title, mal_id, year, img) => {
+  //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
+  console.log(`/api/animesearch/${mal_id}/${title} (${year})`)
+  try {
+    const { data } = await axios.get(
+      `/api/animesearch/${mal_id}/${encodeURIComponent(title)} (${year})`
+    )
+    return data
+  } catch (error) {
+    //in case there's an error, search for the second way the year is formatted
+    console.log(`Before year: ${year}`)
+    if (parseInt(year) < 2000) {
+      //get last two digits and round down to nearest 10
+      year = Math.floor(parseInt(year.substring(2)) / 10) * 10
+      //run api call here to get wikipage on animeThemes
+    }
+    console.log(`After year: ${year}`)
 
-export { resultsJikanFromTitle, songsByAnimeTitleYear, getOpAndEd }
+    // Api with 2 digit year: 90s, 80s
+    try {
+      const {
+        data: { wikiPage },
+      } = await axios.get(
+        `/api/animesearch/${mal_id}/${encodeURIComponent(title)} (${year}s)`
+      )
+      console.log(wikiPage)
+      return wikiPage
+    } catch (error) {
+      console.error('Opening and Endings cannot be found')
+    }
+  }
+}
+
+const songsByAnimeTitleYearBackup = async (title, mal_id, year, img) => {
+  //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
+  console.log(`/api/animesearch/${mal_id}/${title} (${year})`)
+  //in case there's an error, search for the second way the year is formatted
+  console.log(`Before year: ${year}`)
+  if (parseInt(year) < 2000) {
+    //get last two digits and round down to nearest 10
+    year = Math.floor(parseInt(year.substring(2)) / 10) * 10
+    //run api call here to get wikipage on animeThemes
+  }
+  console.log(`After year: ${year}`)
+
+  // Api with 2 digit year: 90s, 80s
+  try {
+    const {
+      data: { wikiPage },
+    } = await axios.get(
+      `/api/animesearch/${mal_id}/${encodeURIComponent(title)} (${year}s)`
+    )
+    console.log(wikiPage)
+    return wikiPage
+  } catch (error) {
+    console.error('Opening and Endings cannot be found')
+  }
+}
+
+export {
+  resultsJikanFromTitle,
+  songsByAnimeTitleYear,
+  getOpAndEd,
+  songsByAnimeTitleYearBackup,
+}

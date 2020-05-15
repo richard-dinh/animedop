@@ -4,6 +4,7 @@ import { VideoContext } from './../context/VideoContext'
 import {
   resultsJikanFromTitle,
   songsByAnimeTitleYear,
+  songsByAnimeTitleYearBackup,
   getOpAndEd,
 } from './../model/Reddit'
 import loadingGif from './../assets/raphtalia-spin.gif'
@@ -49,9 +50,9 @@ const VideoDetail = ({ animeId }) => {
       data.mal_id,
       data.year,
       data.img
-    ).then(async (wikiPage) => {
+    ).then(async ({ wikiPage, title }) => {
       console.log('wikiPage-' + JSON.stringify(wikiPage))
-      await getOpAndEd(wikiPage, data.title, data.img)
+      await getOpAndEd(wikiPage, title ? title : data.title, data.img)
         .then((result) => {
           console.log('result-' + JSON.stringify(result))
 
@@ -75,6 +76,39 @@ const VideoDetail = ({ animeId }) => {
         })
         .catch((e) => {
           console.log(e)
+          const link2 = songsByAnimeTitleYearBackup(
+            data.title,
+            data.mal_id,
+            data.year,
+            data.img
+          ).then(async ({ wikiPage, title }) => {
+            console.log('wikiPage-' + JSON.stringify(wikiPage))
+            await getOpAndEd(
+              wikiPage,
+              title ? title : data.title,
+              data.img
+            ).then((result) => {
+              console.log('result-' + JSON.stringify(result))
+
+              var videosData = []
+              for (var j = 0; j < result.length; j++) {
+                if (result[j].link != undefined) {
+                  videosData.push({
+                    key: j,
+                    type: result[j].number,
+                    link: result[j].link,
+                    title: result[j].title,
+                    episode: result[j].episode,
+                  })
+                }
+              }
+              console.log('videosData-' + JSON.stringify(videosData))
+
+              // const videosData = response.data.items
+              setVideos(videosData)
+              setVideoSelected(videosData[0].link)
+            })
+          })
         })
       //   //setVideoSelected(result[5].link)
 
