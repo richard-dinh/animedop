@@ -46,7 +46,6 @@ const Home = () => {
   }, [search])
 
   useEffect(() => {
-    console.log(title, mal_id)
     if(title){
       history.push(`/watch/${title}`)
     }
