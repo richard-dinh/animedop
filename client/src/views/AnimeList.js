@@ -25,22 +25,22 @@ const Home = () => {
   const history = useHistory()
   //bring in context
   const {search, mal_id, title, updateTitleAndMAL} = useContext(AnimeContext)
-
   const [animeList, setAnimeList] = useState([])
 
   //run when search is updated
   useEffect(() => {
-    if (!search) {
+    if (!search && !localStorage.getItem('previousSearch')) {
       history.push('/')
     }
     else{
-      API.jikan(search)
+      let tempSearch = search ? null : localStorage.getItem('previousSearch')
+      API.jikan(tempSearch ?? search)
       .then( ({data :{results}}) => {
         //filter results for anime that have a start date (only getting anime that have already aired)
         results = results.filter(anime => anime.start_date)
         console.log(results)
         setAnimeList(results)
-        updateTitleAndMAL(null, search)
+        updateTitleAndMAL(null, tempSearch ?? search)
         
       })
       .catch(err => console.error(err))
@@ -54,7 +54,7 @@ const Home = () => {
       history.push(`/watch/${title}`)
     }
   }, [title, mal_id])
-  return (
+  return (  
     <>
       <CssBaseline />
       {/* <Heading /> */}

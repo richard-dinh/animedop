@@ -3,9 +3,10 @@ import API from '../utils/api/api.js'
 import AnimeContext from '../utils/context/AnimeContext.js'
 const VideoList = () => {
 
-  const {wikiPage, updateWikiPage, mal_id, videos, updateVideos, title} = useContext(AnimeContext)
+  const {wikiPage, updateWikiPage, mal_id, videos, updateVideos, title, updateSearch} = useContext(AnimeContext)
 
   useEffect(() => {
+  updateSearch(null)
   API.getWiki(mal_id, title)
   .then( ({data: {wikiPage, title: englishTitle}}) => {
     console.log(wikiPage, englishTitle)

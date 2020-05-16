@@ -49,7 +49,11 @@ function App() {
   })
   animeState.updateSearch = search => {
     setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null })
+      if (!search){
+        localStorage.setItem('previousSearch', localStorage.getItem('search'))  
+      }
     localStorage.setItem('search', search)
+    console.log(localStorage.getItem('search'))
   }
   animeState.updateVideos = videos => {
     setAnimeState({ ...animeState, videos })
@@ -58,7 +62,7 @@ function App() {
     setAnimeState({ ...animeState, wikiPage })
   }
   animeState.updateTitleAndMAL = (mal_id, title) => {
-    setAnimeState({ ...animeState, mal_id, title })
+    setAnimeState({ ...animeState, mal_id, title})
   }
 
   const [initialState, setInitialState] = useState(animeState)
