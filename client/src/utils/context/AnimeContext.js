@@ -11,6 +11,8 @@ const AnimeContext = createContext({
   updateVideos: () => {},
   updateWikiPage: () => {},
   updateTitleAndMAL: () => {},
+  resetState: () => {},
+  newSearch: () => {}
 })
 
 export default AnimeContext

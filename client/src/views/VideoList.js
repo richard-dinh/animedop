@@ -10,23 +10,11 @@ const VideoList = () => {
   .then( ({data: {wikiPage, title: englishTitle}}) => {
     console.log(wikiPage, englishTitle)
     //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
-    if(englishTitle){
-      API.getVideos(englishTitle, wikiPage)
-      .then( ({data}) => {
-        //videos populated here
-        console.log(data)
-      })
-      .catch(err => console.error(err))
-    }
-    //else do search with original title
-    else{
-      API.getVideos(title, wikiPage)
-        .then(({ data }) => {
-          //videos populated here
-          console.log(data)
-        })
-        .catch(err => console.error(err))
-    }
+    API.getVideos(englishTitle ? englishTitle : title, wikiPage)
+    .then( ({data}) => {
+      console.log(data)
+    })
+    .catch(err => console.error(err))
   })
   .catch(err => console.error(err))
   }, [])

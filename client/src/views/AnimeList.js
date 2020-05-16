@@ -24,7 +24,7 @@ const Home = () => {
 
   const history = useHistory()
   //bring in context
-  const {search, mal_id, title} = useContext(AnimeContext)
+  const {search, mal_id, title, updateTitleAndMAL} = useContext(AnimeContext)
 
   const [animeList, setAnimeList] = useState([])
 
@@ -40,13 +40,17 @@ const Home = () => {
         results = results.filter(anime => anime.start_date)
         console.log(results)
         setAnimeList(results)
+        updateTitleAndMAL(null, search)
+        
       })
       .catch(err => console.error(err))
     }
   }, [search])
 
   useEffect(() => {
-    if(title){
+    console.log(title, mal_id, search)
+    if(title && mal_id){
+      console.log('ping2')
       history.push(`/watch/${title}`)
     }
   }, [title, mal_id])

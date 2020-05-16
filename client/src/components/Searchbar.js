@@ -35,13 +35,18 @@ const SearchBar = () => {
   const [userInput, setUserInput] = useState('')
 
   //bring in animeContext to store title
-  const {search, updateSearch} = useContext(AnimeContext)
+  const {search, updateSearch, resetState, mal_id, title, newSearch} = useContext(AnimeContext)
   const handleInputChange = event => {
     setUserInput(event.target.value)
   }
 
   const handleSubmit = event => {
     event.preventDefault()
+    // if(mal_id && title){
+    //   newSearch(userInput)
+    // }
+    // else
+    updateSearch('kaguya')
     updateSearch(userInput)
   }
 
@@ -50,6 +55,7 @@ const SearchBar = () => {
     if(search){
       //empty our search
       //pushes user to route
+      console.log('ping')
       setUserInput('')
       history.push(`/search/${search}`)
     }
