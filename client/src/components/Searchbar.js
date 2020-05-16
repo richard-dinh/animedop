@@ -35,18 +35,13 @@ const SearchBar = () => {
   const [userInput, setUserInput] = useState('')
 
   //bring in animeContext to store title
-  const {search, updateSearch, resetState, mal_id, title, newSearch} = useContext(AnimeContext)
+  const {search, updateSearch, mal_id, title} = useContext(AnimeContext)
   const handleInputChange = event => {
     setUserInput(event.target.value)
   }
 
   const handleSubmit = event => {
     event.preventDefault()
-    // if(mal_id && title){
-    //   newSearch(userInput)
-    // }
-    // else
-    updateSearch('kaguya')
     updateSearch(userInput)
   }
 
