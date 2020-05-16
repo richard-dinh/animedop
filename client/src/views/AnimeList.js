@@ -29,10 +29,12 @@ const Home = () => {
 
   //run when search is updated
   useEffect(() => {
+    //check if search and previousSearch dont exist, if they dont, return to homepage
     if (!search && !localStorage.getItem('previousSearch')) {
       history.push('/')
     }
     else{
+      //if user return to search view from video view, get the user's last search
       let tempSearch = search ? null : localStorage.getItem('previousSearch')
       API.jikan(tempSearch ?? search)
       .then( ({data :{results}}) => {

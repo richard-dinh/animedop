@@ -49,6 +49,8 @@ function App() {
   })
   animeState.updateSearch = search => {
     setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null })
+    //previousSearch variable to save user's last search. Only create item if the value passed in is not null (value is null when user searches same anime twice in a row)
+    //Prevents previousSearch from being set to null)
       if (!search){
         localStorage.setItem('previousSearch', localStorage.getItem('search'))  
       }
