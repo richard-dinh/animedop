@@ -18,7 +18,6 @@ let wikiPage
 //   }
 // })
 // .catch(err => console.err(err))
-
 const renderResults = title => {
   //empty out results
   document.getElementById('results').innerHTML = ''
@@ -78,12 +77,11 @@ const generateList = arr => {
 
 //function to get Op and Endings
 const getOpAndEd = (wiki, title, img) => {
-  axios.get(`api/anime/${title}/${wiki}`)
+  console.log(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
+  axios.get(`api/anime/${encodeURIComponent(title)}/${encodeURIComponent(wiki)}`)
   .then( ({data}) => {
     //clear out results field
     document.getElementById('results').innerHTML = ''
-
-
     let animeNode = document.createElement('div')
     animeNode.setAttribute('class', 'card col-md-12')
     animeNode.innerHTML = `
@@ -111,11 +109,10 @@ document.addEventListener('click', event => {
   }
   else if(target.classList.contains('searchResult')){
     let parent = target.parentNode.parentNode
-    console.log(parent.dataset)
     let year
     //need 2 titles for the way animeThemes sets its starting year (can specify a year: 1999 or say 90s)
     console.log(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
-    axios.get(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${parent.dataset.year})`)
+    axios.get(`/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(parent.dataset.title)} (${parent.dataset.year})`)
     .then(({ data: { wikiPage, title } }) => {
       console.log(wikiPage)
       getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
@@ -130,7 +127,7 @@ document.addEventListener('click', event => {
         //run api call here to get wikipage on animeThemes
       }
       console.log(year)
-      axios.get(`/api/animesearch/${parent.dataset.mal_id}/${parent.dataset.title} (${year}s)`)
+      axios.get(`/api/animesearch/${parent.dataset.mal_id}/${encodeURIComponent(parent.dataset.title)} (${year}s)`)
       .then( ({data : {wikiPage, title}}) => {
         console.log(wikiPage)
         getOpAndEd(wikiPage, title ? title : parent.dataset.title, parent.dataset.img)
@@ -148,7 +145,7 @@ document.addEventListener('click', event => {
 
     document.getElementById('videoModalLabel').innerHTML = target.dataset.title
     document.getElementById('videoModalBody').innerHTML = `
-      <video width="100%" height="100%" controls autoplay playsinline>
+      <video width="100%" height="100%" controls autoplay>
         <source src="${target.dataset.link}" type="video/webm" crossorigin="anonymous">
         Your browser does not support the video tag.
       </video>
