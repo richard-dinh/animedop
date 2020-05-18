@@ -7,9 +7,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useParams,
 } from 'react-router-dom'
+
 // import { useMediaQuery } from './components/MediaQuery'
 function App() {
   // const isNotMobile = useMediaQuery('(min-width: 882px')
@@ -22,7 +22,6 @@ function App() {
 
   const Poo = () => {
     let { id } = useParams()
-    console.log(id)
     return (
       <Grid container spacing={3} justify='center'>
         <Grid item xs={12}>
@@ -35,6 +34,7 @@ function App() {
             <Grid item lg={8} xs={12}>
               <VideoDetail animeId={id} />
             </Grid>
+
             {/* Video List */}
             <Grid item lg={4} xs={12}>
               <VideoList />
@@ -54,7 +54,7 @@ function App() {
             <Grid item xs={12}>
               <SearchBar />
             </Grid>
-            <Grid item spacing={3} xs={12}>
+            <Grid item xs={12}>
               <Grid item xs={12}>
                 <VideoGrid />
               </Grid>

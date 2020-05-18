@@ -1,21 +1,19 @@
 import React from 'react'
 
 import { Grid, Paper, Typography } from '@material-ui/core'
-
+// 1 VideoList to Many VideoItems
 const VideoItem = ({ video, onVideoSelected }) => {
-  const playSelectedVideo = () => {
-    onVideoSelected(video)
-  }
-
   return (
-    <Grid items xs={12}>
+    <Grid item xs={12}>
       <Paper
         style={{
           display: 'flex',
           alignItems: 'center',
           cursor: 'pointer',
         }}
-        onClick={playSelectedVideo}
+        onClick={() => {
+          onVideoSelected(video)
+        }}
       >
         <Grid container spacing={4}>
           <Grid item xs={7}>

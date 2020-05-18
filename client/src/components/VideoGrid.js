@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Grid,
   Card,
@@ -14,15 +14,24 @@ import { VideoContext } from '../context/VideoContext'
 import { Link } from 'react-router-dom'
 
 const VideoGrid = () => {
+  // Context
+  const { valueAnimes, valueVideoSelected } = useContext(VideoContext)
+  const animes = valueAnimes[0]
+  const setVideoSelected = valueVideoSelected[1]
+
+  useEffect(() => {
+    // Clear selectedAnime
+    localStorage.removeItem('selectedAnime')
+  }, [])
+
+  // Empty grid, if no animes selected
+  if (animes.length <= 0) {
+    return <div>Here</div>
+  }
+  // Style
   const styleCardAnime = {
     maxWidth: 400,
     textAlign: 'center',
-  }
-
-  const { valueAnimes } = useContext(VideoContext)
-  const animes = valueAnimes[0]
-  if (animes.length <= 0) {
-    return <div>...</div>
   }
 
   const goToMal = (url) => {
@@ -36,12 +45,12 @@ const VideoGrid = () => {
       direction='row'
       justify='center'
       alignItems='flex-start'
-      textAlign='center'
     >
       {animes.map((anime) => (
-        <Grid item lg={4} md={6} sm={6} xs={12}>
+        <Grid item lg={4} md={6} sm={6} xs={12} key={anime.mal_id}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ display: 'inline-block' }}>
+              {/* Card */}
               <Card className={'cardAnime'} style={styleCardAnime}>
                 <CardActionArea>
                   <CardMedia
@@ -65,19 +74,19 @@ const VideoGrid = () => {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
+                  {/* Watch */}
                   <Link to={`/poo/${anime.mal_id}`}>
                     <Button size='small' color='primary'>
                       Watch Op/Ed
                     </Button>
                   </Link>
-
+                  {/* Mal */}
                   <Button
                     size='small'
                     color='primary'
                     onClick={() => goToMal(anime.url)}
                   >
                     {`Go to MAL`}
-                    {/* {`Go to MAL ${anime.url}`} */}
                   </Button>
                 </CardActions>
               </Card>
