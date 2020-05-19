@@ -53,7 +53,7 @@ const SearchBar = () => {
     //   newSearch(userInput)
     // }
     // else
-    updateSearch('kaguya')
+    // updateSearch('kaguya')
     updateSearch(userInput)
   }
 
