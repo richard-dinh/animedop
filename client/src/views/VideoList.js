@@ -1,27 +1,55 @@
-import React, {useState, useContext, useEffect} from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import API from '../utils/api/api.js'
 import AnimeContext from '../utils/context/AnimeContext.js'
-const VideoList = () => {
+import VideoPlayer from './VideoPlayer'
+import loadingGif from './../assets/raphtalia-spin.gif'
 
-  const {wikiPage, updateWikiPage, mal_id, videos, updateVideos, title} = useContext(AnimeContext)
+const VideoList = () => {
+  const {
+    wikiPage,
+    updateWikiPage,
+    mal_id,
+    videos,
+    updateVideos,
+    title,
+    selectedVideo,
+    setSelectedVideo,
+  } = useContext(AnimeContext)
+
+  let data = null
 
   useEffect(() => {
-  API.getWiki(mal_id, title)
-  .then( ({data: {wikiPage, title: englishTitle}}) => {
-    console.log(wikiPage, englishTitle)
-    //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
-    API.getVideos(englishTitle ? englishTitle : title, wikiPage)
-    .then( ({data}) => {
-      console.log(data)
-    })
-    .catch(err => console.error(err))
-  })
-  .catch(err => console.error(err))
+    API.getWiki(mal_id, title)
+      .then(({ data: { wikiPage, title: englishTitle } }) => {
+        console.log(wikiPage, englishTitle)
+        //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
+        API.getVideos(englishTitle ? englishTitle : title, wikiPage)
+          .then(({ data }) => {
+            console.log(data)
+            // Pick the best ED, happy raphtalia noises
+            setSelectedVideo(data[3])
+          })
+          .catch((err) => console.error(err))
+      })
+      .catch((err) => console.error(err))
   }, [])
 
-  return (
-    <p>Video List</p>
-  )
+  if (!selectedVideo) {
+    return (
+      <div>
+        <img src={loadingGif} alt='loading...' />
+        <p>Video List</p>
+      </div>
+    )
+  } else {
+    console.log('data: ' + JSON.stringify(selectedVideo))
+    return (
+      <div>
+        <VideoPlayer videoSrc={selectedVideo.link}></VideoPlayer>
+        <p>Video List</p>
+      </div>
+    )
+  }
 }
 
 export default VideoList
