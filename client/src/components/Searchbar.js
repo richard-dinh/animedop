@@ -49,11 +49,6 @@ const SearchBar = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    // if(mal_id && title){
-    //   newSearch(userInput)
-    // }
-    // else
-    // updateSearch('kaguya')
     updateSearch(userInput)
   }
 
