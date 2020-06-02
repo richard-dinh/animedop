@@ -130,7 +130,7 @@ function App() {
   })
   useEffect(
     () =>
-      void setInterval(() => setIndex((index) => (index + 1) % 4), 10000000),
+      void setInterval(() => setIndex((index) => (index + 1) % slides.length), 10000),
     []
   )
 
