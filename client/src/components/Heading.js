@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   iconFill: {
-    fill: "gray"
+    fill: "gray",
+    zIndex: '2'
   },
   background: {
     backgroundColor: '#5E784D',
@@ -21,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.white, 1),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),  
+      backgroundColor: fade(theme.palette.common.white, 1),  
     },
     marginLeft: 0,
     width: '100%',
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     // vertical padding + font size from searchIcon
     backgroundColor: 'white',
     color: 'black',
-    zIndex: '-1',
+    zIndex: '1',
     paddingLeft: `calc(1em + ${theme.spacing(5)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
