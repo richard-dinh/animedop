@@ -52,7 +52,6 @@ const Home = () => {
   useEffect(() => {
     console.log(title, mal_id, search)
     if(title && mal_id){
-      console.log('ping2')
       history.push(`/watch/${title}`)
     }
   }, [title, mal_id])

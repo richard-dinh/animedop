@@ -14,9 +14,12 @@ const VideoList = () => {
     title,
     selectedVideo,
     setSelectedVideo,
+    updateSearch
   } = useContext(AnimeContext)
 
   useEffect(() => {
+    //set search to null in event user searches same anime again
+    // updateSearch(null)
     API.getWiki(mal_id, title)
       .then(({ data: { wikiPage, title: englishTitle } }) => {
         console.log(wikiPage, englishTitle)

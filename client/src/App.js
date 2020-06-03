@@ -9,37 +9,6 @@ import { Heading } from './components/index.js'
 import './styles.css'
 import { useTransition, animated, config } from 'react-spring'
 
-// const useAnimeState = props => {
-//   let initialState = {... props}
-//   const [animeState, setAnimeState] = useState({
-//     search: localStorage.getItem('search') ? localStorage.getItem('search') : null,
-//     videos: [],
-//     wikiPage: null,
-//     title: null,
-//     mal_id: null
-//   })
-//   animeState.updateSearch = search => {
-//     setAnimeState({ ...animeState, search })
-//     localStorage.setItem('search', search)
-//   }
-//   animeState.updateVideos = videos => {
-//     setAnimeState({ ...animeState, videos })
-//   }
-//   animeState.updateWikiPage = wikiPage => {
-//     setAnimeState({ ...animeState, wikiPage })
-//   }
-//   animeState.updateTitleAndMAL = (mal_id, title) => {
-//     setAnimeState({ ...animeState, mal_id, title })
-//   }
-//   animeState.resetState = () => {
-//     setAnimeState({ ...animeState, videos: [], wikiPage: null, title: null, mal_id: null })
-//   }
-//   animeState.newSearch = search => {
-//     setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null })
-//   }
-//   return animeState
-// }
-
 function App() {
   const [animeState, setAnimeState] = useState({
     search: localStorage.getItem('search')
@@ -52,7 +21,7 @@ function App() {
     selectedVideo: null,
   })
   animeState.updateSearch = search => {
-    setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null })
+    setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null, selectedVideo: null })
     //previousSearch variable to save user's last search. Only create item if the value passed in is not null (value is null when user searches same anime twice in a row)
     //Prevents previousSearch from being set to null)
       if (!search){
@@ -107,25 +76,6 @@ function App() {
       url: 'https://i.redd.it/a4j441jejgy21.jpg',
     },
   ]
-
-  // const slides = [
-  //   {
-  //     id: 0,
-  //     url:
-  //       'photo-1544511916-0148ccdeb877?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1901&q=80i',
-  //   },
-  //   {
-  //     id: 1,
-  //     url:
-  //       'photo-1544572571-ab94fd872ce4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1534&q=80',
-  //   },
-  //   {
-  //     id: 2,
-  //     url:
-  //       'reserve/bnW1TuTV2YGcoh1HyWNQ_IMG_0207.JPG?ixlib=rb-1.2.1&w=1534&q=80',
-  //   },
-  //   { id: 3, url: 'photo-1540206395-68808572332f?ixlib=rb-1.2.1&w=1181&q=80' },
-  // ]
 
   const [index, setIndex] = useState(0)
   const transitions = useTransition(slides[index], (item) => item.id, {
