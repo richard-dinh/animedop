@@ -21,7 +21,7 @@ function App() {
     selectedVideo: null,
   })
   animeState.updateSearch = (search) => {
-    setAnimeState({ ...animeState, search })
+    setAnimeState({ ...animeState, search, videos: null, wikiPage: null, title: null, mal_id: null, selectedVideo: null })
     localStorage.setItem('search', search)
   }
   animeState.updateVideos = (videos) => {
