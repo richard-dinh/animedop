@@ -1,4 +1,4 @@
-import {createContext} from 'react'
+import { createContext } from 'react'
 
 const AnimeContext = createContext({
   search: null,
@@ -7,10 +7,13 @@ const AnimeContext = createContext({
   //title to search anime on wikiPage
   title: null,
   mal_id: null,
+  selectedVideo: null,
   updateSearch: () => {},
   updateVideos: () => {},
   updateWikiPage: () => {},
   updateTitleAndMAL: () => {},
+  resetState: () => {},
+  newSearch: () => {},
 })
 
 export default AnimeContext
