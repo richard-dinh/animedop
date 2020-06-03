@@ -33,24 +33,21 @@ const Home = () => {
     if (!search && !localStorage.getItem('previousSearch')) {
       history.push('/')
     }
-    else{
+    else if (search){
       //if user return to search view from video view, get the user's last search
       let tempSearch = search ? null : localStorage.getItem('previousSearch')
       API.jikan(tempSearch ?? search)
       .then( ({data :{results}}) => {
         //filter results for anime that have a start date (only getting anime that have already aired)
         results = results.filter(anime => anime.start_date)
-        console.log(results)
         setAnimeList(results)
-        updateTitleAndMAL(null, tempSearch ?? search)
-        
+        // updateTitleAndMAL(null, tempSearch ?? search)
       })
       .catch(err => console.error(err))
     }
   }, [search])
 
   useEffect(() => {
-    console.log(title, mal_id, search)
     if(title && mal_id){
       history.push(`/watch/${title}`)
     }
