@@ -33,10 +33,13 @@ const Home = () => {
     if (!search && !localStorage.getItem('previousSearch')) {
       history.push('/')
     }
-    else if (search){
+    else if (search || localStorage.getItem('previousSearch')){
       //if user return to search view from video view, get the user's last search
-      let tempSearch = search ? null : localStorage.getItem('previousSearch')
-      API.jikan(tempSearch ?? search)
+      console.log(search)
+      // console.log(localStorage.getItem('previousSearch'))
+      let ifPreviousSearch = search ? null : localStorage.getItem('previousSearch')
+      console.log(ifPreviousSearch)
+      API.jikan(ifPreviousSearch ?? search)
       .then( ({data :{results}}) => {
         //filter results for anime that have a start date (only getting anime that have already aired)
         results = results.filter(anime => anime.start_date)
@@ -61,7 +64,7 @@ const Home = () => {
           <Grid container spacing = {4}>
             <Grid item xs={12}>
               <Typography variant="h4" gutterBottom>
-                Search Results For: {search}
+                Search Results For: {search ?? localStorage.getItem('previousSearch')}
               </Typography>
             </Grid>
           </Grid>
