@@ -88,7 +88,7 @@ function App() {
   )
 
   return (
-    <div>
+    <>
       <div>
         {transitions.map(({ item, props, key }) => (
           <animated.div
@@ -117,7 +117,7 @@ function App() {
           </Switch>
         </Router>
       </AnimeContext.Provider>
-    </div>
+    </>
   )
 }
 
