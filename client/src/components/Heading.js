@@ -104,9 +104,11 @@ const Heading = () => {
     if (search) {
       //empty our search
       //pushes user to route
-      console.log('ping')
       setUserInput('')
       history.push(`/search/${search}`)
+    }
+    else if (localStorage.getItem('previousSearch') && !localStorage.getItem('search')) {
+      history.push(`/search/${localStorage.getItem('previousSearch')}`)
     }
   }, [search])
 

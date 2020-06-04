@@ -8,6 +8,7 @@ const Home = () => {
   useEffect(()=> { 
     updateSearch(null)
     localStorage.removeItem('search')
+    localStorage.removeItem('previousSearch')
     }, [])
 
   return (
