@@ -8,6 +8,7 @@ const AnimeContext = createContext({
   title: null,
   mal_id: null,
   selectedVideo: null,
+  //variable to check whether to display introduction modal
   updateSearch: () => {},
   updateVideos: () => {},
   updateWikiPage: () => {},

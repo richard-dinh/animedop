@@ -19,6 +19,7 @@ function App() {
     title: null,
     mal_id: null,
     selectedVideo: null,
+    displayModal: true,
   })
   animeState.updateSearch = search => {
     //previousSearch variable to save user's last search. Only create item if the value passed in is not null (value is null when user searches same anime twice in a row)
@@ -56,6 +57,9 @@ function App() {
     //set search to null to prevent VideoList from getting pushed back to AnimeList due to async
     console.log(animeState)
     setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null})
+  }
+  animeState.updateDisplayModal = () => {
+    setAnimeState({ ...animeState, displayModal: false})
   }
 
   const [initialState, setInitialState] = useState(animeState)
