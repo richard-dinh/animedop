@@ -20,17 +20,25 @@ function App() {
     mal_id: null,
     selectedVideo: null,
   })
-  animeState.updateSearch = search => {
+  animeState.updateSearch = (search) => {
     //previousSearch variable to save user's last search. Only create item if the value passed in is not null (value is null when user searches same anime twice in a row)
     //Prevents previousSearch from being set to null)
-    setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null, selectedVideo: null })
-      // if (!search){
-      //   setAnimeState({ ...animeState, search: null})
-      //   localStorage.setItem('previousSearch', localStorage.getItem('search'))  
-      // }
-      // else{
-      //   setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null, selectedVideo: null })
-      // }
+    setAnimeState({
+      ...animeState,
+      search,
+      videos: [],
+      wikiPage: null,
+      title: null,
+      mal_id: null,
+      selectedVideo: null,
+    })
+    // if (!search){
+    //   setAnimeState({ ...animeState, search: null})
+    //   localStorage.setItem('previousSearch', localStorage.getItem('search'))
+    // }
+    // else{
+    //   setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null, selectedVideo: null })
+    // }
     localStorage.setItem('search', search)
   }
   animeState.updateVideos = (videos) => {
@@ -41,13 +49,19 @@ function App() {
   }
   animeState.updateTitleAndMAL = (mal_id, title) => {
     //function only runs when someone clicks on the anime they want to watch op/ed of.
-    //Need to set search to null here to prevent asyncrouns call when getting pushed to VideoList page. 
-    setAnimeState({ ...animeState, mal_id, title, search: null})
+    //Need to set search to null here to prevent asyncrouns call when getting pushed to VideoList page.
+    setAnimeState({
+      ...animeState,
+      mal_id,
+      title,
+      search: null,
+      selectedVideo: null,
+    })
 
     //set previous search to what they searched then empty out search so they can do another search(need another variable in the event they search up the same anime again)
 
     //check if there is a search is localStorage before setting previous search. Bug fix for when user presses back on vidoPlayer view and clicks to watch another anime OP/ED
-    if (localStorage.getItem('search')){
+    if (localStorage.getItem('search')) {
       localStorage.setItem('previousSearch', localStorage.getItem('search'))
     }
     localStorage.removeItem('search')
@@ -55,7 +69,7 @@ function App() {
   animeState.setSelectedVideo = (selectedVideo) => {
     //set search to null to prevent VideoList from getting pushed back to AnimeList due to async
     console.log(animeState)
-    setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null})
+    setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null })
   }
 
   const [initialState, setInitialState] = useState(animeState)
@@ -83,7 +97,10 @@ function App() {
   })
   useEffect(
     () =>
-      void setInterval(() => setIndex((index) => (index + 1) % slides.length), 10000),
+      void setInterval(
+        () => setIndex((index) => (index + 1) % slides.length),
+        10000
+      ),
     []
   )
 
