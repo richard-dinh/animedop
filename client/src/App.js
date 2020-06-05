@@ -55,6 +55,7 @@ function App() {
       mal_id,
       title,
       search: null,
+      // Clear out selectedVideo for when the user presses back to the anime grid after watching a video
       selectedVideo: null,
     })
 
