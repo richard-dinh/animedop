@@ -8,7 +8,7 @@ const VideoPlayer = ({ videoSrc }) => {
       autoPlay = {false}
       controls
       width='100%'
-      height='100%'
+      height='auto'
       volume={0.6}
     ></ReactPlayer>
   )
