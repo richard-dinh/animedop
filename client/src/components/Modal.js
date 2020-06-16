@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Modal, Backdrop} from '@material-ui/core'
 import { useSpring, animated } from 'react-spring/web.cjs'; // web.cjs is required for IE 11 support
 import AnimeContext from '../utils/context/AnimeContext.js'
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     display: 'flex',
