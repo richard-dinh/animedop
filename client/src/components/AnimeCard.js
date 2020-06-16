@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const AnimeCard = (props) => {
   const classes = useStyles()
   const animeList = props.list
-  const { updateTitleAndMAL, setSelectedVideo } = useContext(AnimeContext)
+  const { updateTitleAndMAL } = useContext(AnimeContext)
 
   const handleClick = (mal_id, title) => {
     updateTitleAndMAL(mal_id, title)

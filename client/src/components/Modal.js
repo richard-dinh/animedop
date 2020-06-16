@@ -56,10 +56,7 @@ const SpringModal = () => {
   const [open, setOpen] = React.useState(true);
 
   //bring updateDisplayModal from AnimeContext
-  const { updateDisplayModal } = useContext(AnimeContext)
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // const { updateDisplayModal } = useContext(AnimeContext)
 
   const handleClose = () => {
     setOpen(false);

@@ -7,15 +7,10 @@ import { Grid, Paper, Typography } from '@material-ui/core'
 
 const VideoList = () => {
   const {
-    wikiPage,
-    updateWikiPage,
     mal_id,
-    videos,
-    updateVideos,
     title,
     selectedVideo,
     setSelectedVideo,
-    updateSearch,
   } = useContext(AnimeContext)
 
   const [animeVideos, setAnimeVideos] = useState([])

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { AnimeCard, Heading } from '../components/index'
+import { AnimeCard } from '../components/index'
 import { makeStyles } from '@material-ui/core/styles'
 import {CssBaseline, Grid, Container, Typography} from '@material-ui/core'
 import AnimeContext from '../utils/context/AnimeContext.js'
@@ -26,8 +26,6 @@ const Home = () => {
     search,
     mal_id,
     title,
-    updateTitleAndMAL,
-    setSelectedVideo,
   } = useContext(AnimeContext)
   const [animeList, setAnimeList] = useState([])
 

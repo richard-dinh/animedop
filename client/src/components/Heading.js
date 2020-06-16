@@ -80,10 +80,6 @@ const Heading = () => {
   const {
     search,
     updateSearch,
-    resetState,
-    mal_id,
-    title,
-    newSearch,
   } = useContext(AnimeContext)
 
   const handleInputChange = (event) => {
