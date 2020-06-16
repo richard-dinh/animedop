@@ -8,13 +8,13 @@ import { Grid, Paper, Typography, Container } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   sideVideo: {
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
-    height: '19%',
+    maxHeight: '19%',
   },
   sideVideoMargin: {
     marginTop: '.5rem'
@@ -22,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
   videoPlayer: {
     paddingRight: '1rem',
     paddingLeft: '4rem',
-    paddingTop: '.75rem',
-    //adjust 
+    paddingTop: '1rem',
+    maxHeight: '90vh',
+    //adjust padding on left and right for anything lower than lg 
     [theme.breakpoints.down('lg')]:{
       paddingLeft: '2rem',
       paddingTop: '2rem'
@@ -34,20 +35,25 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '4rem', 
     paddingLeft: '.75rem',
     overflow: 'auto',
+    maxHeight: '90vh',
     [theme.breakpoints.down('lg')]: {
       paddingLeft: '2rem',
-        paddingTop: '2rem'
+      paddingTop: '2rem'
     }
-  },
-  paperStyle: {
-    height: '100%'
   },
   sideVideoDetail: {
     paddingLeft: '3rem'
   },
   fillHeight: {
     height: '100%'
-  }
+  },
+  video: {
+    height: '80vh',
+    width: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      height: '36vh'
+    }
+  },
 }))
 
 const VideoList = () => {
@@ -103,7 +109,6 @@ const VideoList = () => {
           <Grid container className = {classes.fillHeight}>
             <Grid item xs={4}>
               <img
-                className = {classes.fillHeight}
                 src='https://i.imgur.com/I2jULg9.png'
                 alt='thumbnail'
               />
@@ -125,18 +130,16 @@ const VideoList = () => {
         <Grid container>
           <Grid item xs = {12} lg = {9} className = {classes.videoPlayer}>
             {/* Video that is playing */}
-            <Paper elevation = {3} className = {classes.paperStyle}>
               <Grid container>
-                <Grid item xs = {12}>
+                <Grid item xs = {12} className = {classes.video}>
                   <VideoPlayer videoSrc={selectedVideo.link}></VideoPlayer>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} className = {classes.videoDetail}>
                   <Typography component="h2" variant="h2">
                     {`${selectedVideo.number}: ${selectedVideo.title}`}
                   </Typography>
                 </Grid>
               </Grid>
-            </Paper>
           </Grid> 
           <Grid item xs={12} lg={3} className = {classes.sideBar} direction = 'column'>
             {/* Video Selection sidebar */}
