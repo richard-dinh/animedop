@@ -33,13 +33,6 @@ function App() {
       mal_id: null,
       selectedVideo: null,
     })
-    // if (!search){
-    //   setAnimeState({ ...animeState, search: null})
-    //   localStorage.setItem('previousSearch', localStorage.getItem('search'))
-    // }
-    // else{
-    //   setAnimeState({ ...animeState, search, videos: [], wikiPage: null, title: null, mal_id: null, selectedVideo: null })
-    // }
     localStorage.setItem('search', search)
   }
   animeState.updateVideos = (videos) => {
@@ -77,7 +70,6 @@ function App() {
     setAnimeState({ ...animeState, displayModal: false})
   }
 
-  const [initialState, setInitialState] = useState(animeState)
 
   const slides = [
     { id: 0, url: 'https://images6.alphacoders.com/991/991043.jpg' },

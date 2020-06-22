@@ -59,15 +59,10 @@ const useStyles = makeStyles((theme) => ({
 const VideoList = () => {
   const classes = useStyles()
   const {
-    wikiPage,
-    updateWikiPage,
     mal_id,
-    videos,
-    updateVideos,
     title,
     selectedVideo,
     setSelectedVideo,
-    updateSearch,
   } = useContext(AnimeContext)
 
   const [animeVideos, setAnimeVideos] = useState([])

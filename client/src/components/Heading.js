@@ -1,11 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { makeStyles, fade } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import PolicyIcon from '@material-ui/icons/Policy'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import SearchIcon from '@material-ui/icons/Search'
-import InputBase from '@material-ui/core/InputBase';
+import {AppBar, Toolbar, Typography, InputBase } from '@material-ui/core'
+import {Search, Policy} from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
 import AnimeContext from '../utils/context/AnimeContext.js'
 const useStyles = makeStyles((theme) => ({
@@ -84,10 +80,6 @@ const Heading = () => {
   const {
     search,
     updateSearch,
-    resetState,
-    mal_id,
-    title,
-    newSearch,
   } = useContext(AnimeContext)
 
   const handleInputChange = (event) => {
@@ -103,8 +95,8 @@ const Heading = () => {
   useEffect(() => {
     if (search) {
       //empty our search
-      //pushes user to route
       setUserInput('')
+      //pushes user to route
       history.push(`/search/${search}`)
     }
     else if (localStorage.getItem('previousSearch') && !localStorage.getItem('search')) {
@@ -116,13 +108,13 @@ const Heading = () => {
     <>
       <AppBar position='static' className={classes.background}>
         <Toolbar>
-          <PolicyIcon className={classes.icon} />
+          <Policy className={classes.icon} />
           <Typography className = {classes.title} variant='h6' color='inherit' noWrap>
             Animedop
           </Typography>
           <form className={classes.search} onSubmit={handleSubmit}>
             <div className={classes.searchIcon}>
-              <SearchIcon className={classes.iconFill}/>
+              <Search className={classes.iconFill}/>
             </div>
             <InputBase
               placeholder="Search..."
@@ -130,40 +122,12 @@ const Heading = () => {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              // inputProps={{ 'aria-label': 'search' }}
               onChange={handleInputChange}
               value={userInput}
             />
           </form>
         </Toolbar>
       </AppBar>
-      {/* <div className={classes.heroContent}>
-        <Container maxWidth='sm'>
-          <Typography
-            component='h1'
-            variant='h2'
-            align='center'
-            color='textPrimary'
-            gutterBottom
-          >
-            Animedop
-          </Typography>
-          <Typography
-            variant='h5'
-            align='center'
-            color='textSecondary'
-            paragraph
-          >
-            Search supports English and Japanese titles!
-          </Typography>
-          <div className={classes.heroButtons}>
-            <Grid container spacing={2} justify='center'>
-              Search Bar here
-              <Search />
-            </Grid>
-          </div>
-        </Container>
-      </div> */}
     </>
   )
 }
