@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   sideVideoDetail: {
     paddingLeft: '3rem'
   },
+  videoDetail: {
+    paddingTop: '1em'
+  },
   fillHeight: {
     height: '100%'
   },
@@ -58,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   buttonControls: {
-    margin: 'auto auto auto 1.5em'
+    margin: '0 auto'
   }
 }))
 
@@ -72,6 +75,17 @@ const VideoList = () => {
   } = useContext(AnimeContext)
 
   const [animeVideos, setAnimeVideos] = useState([])
+  const [videoIndex, setVideoIndex] = useState(null)
+  //event listener to listen to left (previous) and right (next) arrow keys
+
+
+  //function to handle click event for selecting another video
+  const handleClick = (video, index) => {
+    console.log(index)
+    setSelectedVideo(video)
+    setVideoIndex(index)
+  }
+
   useEffect(() => {
     //set search to null in event user searches same anime again
     API.getWiki(mal_id, title)
@@ -79,12 +93,16 @@ const VideoList = () => {
         //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
         API.getVideos(englishTitle ? englishTitle : title, wikiPage)
           .then(({ data }) => {
+            //remove first element in data (element contains mal id and anime name)
+            data.shift()
+            console.log(data)
             setAnimeVideos(data)
             const firstValidLink = data.find((animeVideo) =>
               animeVideo.hasOwnProperty('link')
             )
             // No longer picks the best ed, sad raphtalia noises
             setSelectedVideo(firstValidLink)
+            setVideoIndex(0)
           })
           .catch((err) => console.error(err))
       })
@@ -102,9 +120,9 @@ const VideoList = () => {
       animeVideo.link ? (
         <Paper
           elevation = {3}
-          className = {index === 1 ? classes.sideVideo : `${classes.sideVideo} ${classes.sideVideoMargin}`}
+          className = {index === 0 ? classes.sideVideo : `${classes.sideVideo} ${classes.sideVideoMargin}`}
           onClick={() => {
-            setSelectedVideo(animeVideo)
+            handleClick(animeVideo, index)
           }}
         >
           <Grid container className = {classes.fillHeight}>
@@ -127,7 +145,7 @@ const VideoList = () => {
       ) : null
     )
     return (
-      <div className = {classes.root}>
+      <div className = {classes.root} onKeyUp = { () =>  handleKeyPress}>
         <Grid container>
           <Grid item xs = {12} lg = {9} className = {classes.videoPlayer}>
             {/* Video that is playing */}
@@ -137,12 +155,12 @@ const VideoList = () => {
                 </Grid>
                 <Grid item xs={12} className = {classes.videoDetail}>
                   <Grid container>
-                    <Grid item md = {9} xs = {12}>
-                      <Typography component="h2" variant="h2">
+                    <Grid item lg = {9} xs = {12}>
+                      <Typography component="h4" variant="h4">
                         {`${selectedVideo.number}: ${selectedVideo.title}`}
                       </Typography>
                     </Grid>
-                    <Grid item md = {3} xs = {12} className = {classes.buttonGroup}>
+                    <Grid item lg = {3} xs = {12} className = {classes.buttonGroup}>
                       <SkipPrevious className = {classes.buttonControls} fontSize = "large"/>
                       <SkipNext className = {classes.buttonControls} fontSize = "large"/>
                     </Grid>
