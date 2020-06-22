@@ -6,6 +6,7 @@ import VideoPlayer from './VideoPlayer'
 import loadingGif from './../assets/raphtalia-spin.gif'
 import { Grid, Paper, Typography, Container, IconButton } from '@material-ui/core'
 import {SkipPrevious, SkipNext} from '@material-ui/icons'
+import KeyboardEventHandler from 'react-keyboard-event-handler'
 const useStyles = makeStyles((theme) => ({
   root: {
     boxSizing: 'border-box',
