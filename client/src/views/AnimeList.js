@@ -41,7 +41,6 @@ const Home = () => {
       let ifPreviousSearch = search
         ? null
         : localStorage.getItem('previousSearch')
-      console.log(ifPreviousSearch)
       API.jikan(ifPreviousSearch ?? search)
         .then(({ data: { results } }) => {
           //filter results for anime that have a start date (only getting anime that have already aired)
@@ -60,7 +59,6 @@ const Home = () => {
   }, [title, mal_id])
 
   if (animeList.length < 1) {
-    console.log('ur mum')
     return <img src={loadingGif} alt='loading...' />
   } else {
     return (

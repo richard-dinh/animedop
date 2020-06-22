@@ -63,7 +63,6 @@ function App() {
   }
   animeState.setSelectedVideo = (selectedVideo) => {
     //set search to null to prevent VideoList from getting pushed back to AnimeList due to async
-    console.log(animeState)
     setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null })
   }
   animeState.updateDisplayModal = () => {
