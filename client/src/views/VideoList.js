@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import VideoPlayer from './VideoPlayer'
 import loadingGif from './../assets/raphtalia-spin.gif'
-import { Grid, Paper, Typography, Container } from '@material-ui/core'
-
+import { Grid, Paper, Typography, Container, IconButton } from '@material-ui/core'
+import {SkipPrevious, SkipNext} from '@material-ui/icons'
 const useStyles = makeStyles((theme) => ({
   root: {
     boxSizing: 'border-box',
@@ -54,6 +54,12 @@ const useStyles = makeStyles((theme) => ({
       height: '36vh'
     }
   },
+  buttonGroup: {
+    display: 'flex'
+  },
+  buttonControls: {
+    margin: 'auto auto auto 1.5em'
+  }
 }))
 
 const VideoList = () => {
@@ -130,9 +136,17 @@ const VideoList = () => {
                   <VideoPlayer videoSrc={selectedVideo.link}></VideoPlayer>
                 </Grid>
                 <Grid item xs={12} className = {classes.videoDetail}>
-                  <Typography component="h2" variant="h2">
-                    {`${selectedVideo.number}: ${selectedVideo.title}`}
-                  </Typography>
+                  <Grid container>
+                    <Grid item md = {9} xs = {12}>
+                      <Typography component="h2" variant="h2">
+                        {`${selectedVideo.number}: ${selectedVideo.title}`}
+                      </Typography>
+                    </Grid>
+                    <Grid item md = {3} xs = {12} className = {classes.buttonGroup}>
+                      <SkipPrevious className = {classes.buttonControls} fontSize = "large"/>
+                      <SkipNext className = {classes.buttonControls} fontSize = "large"/>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
           </Grid> 

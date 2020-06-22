@@ -10,7 +10,7 @@ const VideoPlayer = ({ videoSrc }) => {
   return (
     <ReactPlayer
       url={videoSrc}
-      playing = {true}
+      playing = {false}
       controls
       width = '100%'
       height = {matches ? 'auto' : '100%'}
