@@ -76,7 +76,18 @@ const VideoList = () => {
   } = useContext(AnimeContext)
 
   const [animeVideos, setAnimeVideos] = useState([])
-  const [videoIndex, setVideoIndex] = useState(null)
+  const [videoIndex, setVideoIndex] = useState({
+    index: 0,
+    maxLength: 0
+  })
+
+  const updateVideoIndex = (index, maxLength) => {
+    setVideoIndex({ ...videoIndex, index, maxLength})
+  }
+
+  const updateIndex = index => {
+    setVideoIndex({...videoIndex, index})
+  }
   //event listener to listen to left (previous) and right (next) arrow keys
 
 
@@ -84,7 +95,7 @@ const VideoList = () => {
   const handleClick = (video, index) => {
     console.log(index)
     setSelectedVideo(video)
-    setVideoIndex(index)
+    updateIndex(index)
   }
 
   useEffect(() => {
@@ -103,7 +114,7 @@ const VideoList = () => {
             )
             // No longer picks the best ed, sad raphtalia noises
             setSelectedVideo(firstValidLink)
-            setVideoIndex(0)
+            updateVideoIndex(0, data.length)
           })
           .catch((err) => console.error(err))
       })
@@ -146,7 +157,7 @@ const VideoList = () => {
       ) : null
     )
     return (
-      <div className = {classes.root} onKeyUp = { () =>  handleKeyPress}>
+      <div className = {classes.root}>
         <Grid container>
           <Grid item xs = {12} lg = {9} className = {classes.videoPlayer}>
             {/* Video that is playing */}
@@ -174,6 +185,35 @@ const VideoList = () => {
               {listAnimeVideos}
           </Grid>
         </Grid>
+        <KeyboardEventHandler 
+          handleEventType = 'keyup'
+          handleKeys = {['left', 'right']}
+          onKeyEvent = {(key, e) => {
+            let newIndex = 0
+            if(key === 'left'){
+              console.log('left')
+              //if user is on first video, send them to last video
+              if(videoIndex.index === 0){
+                newIndex = videoIndex.maxLength - 1
+                updateIndex(newIndex)
+                // console.log(animeVideos[newIndex])
+                setSelectedVideo(animeVideos[newIndex])
+              }
+              else{
+                newIndex = (videoIndex.index - 1) % videoIndex.maxLength
+                updateIndex(newIndex)
+                // console.log(animeVideos[newIndex])
+                setSelectedVideo(animeVideos[newIndex])
+              }
+            }
+            else{
+              newIndex = (videoIndex.index + 1) % videoIndex.maxLength
+              updateIndex(newIndex)
+              // console.log(animeVideos[newIndex])
+              setSelectedVideo(animeVideos[newIndex])
+            }
+          }}
+        />
       </div>
     )
   }
