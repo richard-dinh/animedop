@@ -98,6 +98,28 @@ const VideoList = () => {
     updateIndex(index)
   }
 
+  //listener for previous button click
+  const handlePrevious = () => {
+    let newIndex = 0
+    if (videoIndex.index === 0) {
+      newIndex = videoIndex.maxLength - 1
+      updateIndex(newIndex)
+      setSelectedVideo(animeVideos[newIndex])
+    }
+    else {
+      newIndex = (videoIndex.index - 1) % videoIndex.maxLength
+      updateIndex(newIndex)
+      setSelectedVideo(animeVideos[newIndex])
+    }
+  }
+  
+  //listener for next button click
+  const handleNext = () => {
+    let newIndex = (videoIndex.index + 1) % videoIndex.maxLength
+    updateIndex(newIndex)
+    setSelectedVideo(animeVideos[newIndex])
+  }
+
   useEffect(() => {
     //set search to null in event user searches same anime again
     API.getWiki(mal_id, title)
@@ -173,8 +195,8 @@ const VideoList = () => {
                       </Typography>
                     </Grid>
                     <Grid item lg = {3} xs = {12} className = {classes.buttonGroup}>
-                      <SkipPrevious className = {classes.buttonControls} fontSize = "large"/>
-                      <SkipNext className = {classes.buttonControls} fontSize = "large"/>
+                      <SkipPrevious className = {classes.buttonControls} fontSize = "large" onClick = {handlePrevious}/>
+                      <SkipNext className = {classes.buttonControls} fontSize = "large" onClick = {handleNext}/>
                     </Grid>
                   </Grid>
                 </Grid>
@@ -196,20 +218,17 @@ const VideoList = () => {
               if(videoIndex.index === 0){
                 newIndex = videoIndex.maxLength - 1
                 updateIndex(newIndex)
-                // console.log(animeVideos[newIndex])
                 setSelectedVideo(animeVideos[newIndex])
               }
               else{
                 newIndex = (videoIndex.index - 1) % videoIndex.maxLength
                 updateIndex(newIndex)
-                // console.log(animeVideos[newIndex])
                 setSelectedVideo(animeVideos[newIndex])
               }
             }
             else{
               newIndex = (videoIndex.index + 1) % videoIndex.maxLength
               updateIndex(newIndex)
-              // console.log(animeVideos[newIndex])
               setSelectedVideo(animeVideos[newIndex])
             }
           }}
