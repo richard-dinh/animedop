@@ -122,10 +122,12 @@ const VideoList = () => {
 
   useEffect(() => {
     //set search to null in event user searches same anime again
-    API.getWiki(mal_id, title)
+    let mal = localStorage.getItem('mal_id') ?? mal_id
+    let animeTitle = localStorage.getItem('title') ?? title
+    API.getWiki(parseInt(mal), animeTitle)
       .then(({ data: { wikiPage, title: englishTitle } }) => {
         //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
-        API.getVideos(englishTitle ? englishTitle : title, wikiPage)
+        API.getVideos(englishTitle ? englishTitle : animeTitle, wikiPage)
           .then(({ data }) => {
             //remove first element in data (element contains mal id and anime name)
             data.shift()

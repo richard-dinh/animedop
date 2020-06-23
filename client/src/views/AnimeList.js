@@ -53,10 +53,9 @@ const Home = () => {
   }, [search])
 
   useEffect(() => {
-    if (title && mal_id) {
+    if ((title && mal_id) || (localStorage.getItem('title') && localStorage.getItem('mal_id'))) {
       //add title and mal_id to localstorage here
-      
-      history.push(`/watch/${title}`)
+      history.push(`/watch/${title || localStorage.getItem('title')}`)
     }
   }, [title, mal_id])
 
