@@ -215,21 +215,10 @@ const VideoList = () => {
             if(key === 'left'){
               console.log('left')
               //if user is on first video, send them to last video
-              if(videoIndex.index === 0){
-                newIndex = videoIndex.maxLength - 1
-                updateIndex(newIndex)
-                setSelectedVideo(animeVideos[newIndex])
-              }
-              else{
-                newIndex = (videoIndex.index - 1) % videoIndex.maxLength
-                updateIndex(newIndex)
-                setSelectedVideo(animeVideos[newIndex])
-              }
+              handlePrevious()
             }
             else{
-              newIndex = (videoIndex.index + 1) % videoIndex.maxLength
-              updateIndex(newIndex)
-              setSelectedVideo(animeVideos[newIndex])
+              handleNext()
             }
           }}
         />

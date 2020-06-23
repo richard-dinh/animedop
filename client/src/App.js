@@ -34,6 +34,7 @@ function App() {
       selectedVideo: null,
     })
     localStorage.setItem('search', search)
+    //remove title and mal_id from localstorage here
   }
   animeState.updateVideos = (videos) => {
     setAnimeState({ ...animeState, videos })
@@ -62,6 +63,7 @@ function App() {
     localStorage.removeItem('search')
   }
   animeState.setSelectedVideo = (selectedVideo) => {
+    console.log(animeState)
     //set search to null to prevent VideoList from getting pushed back to AnimeList due to async
     setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null })
   }

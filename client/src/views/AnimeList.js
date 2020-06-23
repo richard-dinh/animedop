@@ -54,6 +54,8 @@ const Home = () => {
 
   useEffect(() => {
     if (title && mal_id) {
+      //add title and mal_id to localstorage here
+      
       history.push(`/watch/${title}`)
     }
   }, [title, mal_id])
