@@ -221,12 +221,14 @@ const VideoList = () => {
                       <FontAwesome
                         name="chevron-circle-left"
                         size="3x"
+                        onClick = {handlePrevious}
                         className={classes.chevronsLeft}
                         style = {{display: hover ? 'block' : 'none'}}
                       />
                       <FontAwesome
                         name="chevron-circle-right"
                         size="3x"
+                        onClick = {handleNext}
                         className={classes.chevronsRight}
                         style={{ display: hover ? 'block' : 'none' }}
                       />
@@ -240,8 +242,8 @@ const VideoList = () => {
                       </Typography>
                     </Grid>
                     <Grid item lg = {3} xs = {12} className = {classes.buttonGroup}>
-                      <SkipPrevious className = {classes.buttonControls} fontSize = "large" onClick = {handlePrevious}/>
-                      <SkipNext className = {classes.buttonControls} fontSize = "large" onClick = {handleNext}/>
+                      {/* <SkipPrevious className = {classes.buttonControls} fontSize = "large" onClick = {handlePrevious}/>
+                      <SkipNext className = {classes.buttonControls} fontSize = "large" onClick = {handleNext}/> */}
                     </Grid>
                   </Grid>
                 </Grid>
