@@ -13,6 +13,7 @@
     "http-proxy-middleware": "^1.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-fontawesome": "^1.7.1",
     "react-keyboard-event-handler": "^1.5.4",
     "react-player": "^2.0.1",
     "react-router-dom": "^5.2.0",
