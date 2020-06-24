@@ -12,7 +12,7 @@ const VideoPlayer = props => {
       src = {props.videoSrc}
       preload = 'auto'
       controls
-      style = {{height: '80vh'}}
+      style = {{height: '80vh', width: '100%'}}
     />
     // <ReactPlayer
     //   url={videoSrc}

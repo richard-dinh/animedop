@@ -4,9 +4,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import VideoPlayer from './VideoPlayer'
 import loadingGif from './../assets/raphtalia-spin.gif'
-import { Grid, Paper, Typography, Container, IconButton } from '@material-ui/core'
+import { Grid, Paper, Typography, Container, IconButton, Tooltip } from '@material-ui/core'
 import {SkipPrevious, SkipNext} from '@material-ui/icons'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
+import FontAwesome from 'react-fontawesome'
 const useStyles = makeStyles((theme) => ({
   root: {
     boxSizing: 'border-box',
@@ -54,6 +55,8 @@ const useStyles = makeStyles((theme) => ({
   video: {
     height: '80vh',
     width: 'auto',
+    zIndex: '4',
+    backgroundColor: 'black',
     [theme.breakpoints.down('xs')]: {
       height: '36vh'
     }
@@ -63,6 +66,26 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonControls: {
     margin: '0 auto'
+  },
+  chevronsLeft :{
+    color: '#ccc',
+    display: 'flex',
+    flexDirection: 'column',
+    cursor: 'pointer',
+    zIndex: '5',
+    position: 'absolute',
+    top: '40%',
+    left: '2%'
+  },
+  chevronsRight :{
+    color: '#ccc',
+    display: 'flex',
+    flexDirection: 'column',
+    cursor: 'pointer',
+    zIndex: '5',
+    position: 'absolute',
+    top: '40%',
+    right: '2%'
   }
 }))
 
@@ -88,7 +111,9 @@ const VideoList = () => {
   const updateIndex = index => {
     setVideoIndex({...videoIndex, index})
   }
-  //event listener to listen to left (previous) and right (next) arrow keys
+  
+  //hover state
+  const [hover, setHover] = useState(false)
 
 
   //function to handle click event for selecting another video
@@ -119,6 +144,7 @@ const VideoList = () => {
     updateIndex(newIndex)
     setSelectedVideo(animeVideos[newIndex])
   }
+
 
   useEffect(() => {
     //set search to null in event user searches same anime again
@@ -186,8 +212,25 @@ const VideoList = () => {
           <Grid item xs = {12} lg = {9} className = {classes.videoPlayer}>
             {/* Video that is playing */}
               <Grid container justify = 'center'>
-                <Grid item xs = {12} className = {classes.video} align = 'center'>
-                  <VideoPlayer videoSrc={selectedVideo.link}></VideoPlayer>
+                <Grid item xs = {12} className = {classes.video} align = 'center' 
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                >
+                  <div style = {{position: 'relative'}}>
+                    <VideoPlayer videoSrc={selectedVideo.link} />
+                      <FontAwesome
+                        name="chevron-circle-left"
+                        size="3x"
+                        className={classes.chevronsLeft}
+                        style = {{display: hover ? 'block' : 'none'}}
+                      />
+                      <FontAwesome
+                        name="chevron-circle-right"
+                        size="3x"
+                        className={classes.chevronsRight}
+                        style={{ display: hover ? 'block' : 'none' }}
+                      />
+                  </div>
                 </Grid>
                 <Grid item xs={12} className = {classes.videoDetail}>
                   <Grid container>
