@@ -54,7 +54,6 @@ const Home = () => {
 
   useEffect(() => {
     if ((title && mal_id) || (localStorage.getItem('title') && localStorage.getItem('mal_id'))) {
-      //add title and mal_id to localstorage here
       history.push(`/watch/${title || localStorage.getItem('title')}`)
     }
   }, [title, mal_id])

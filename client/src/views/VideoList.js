@@ -185,8 +185,8 @@ const VideoList = () => {
         <Grid container>
           <Grid item xs = {12} lg = {9} className = {classes.videoPlayer}>
             {/* Video that is playing */}
-              <Grid container>
-                <Grid item xs = {12} className = {classes.video}>
+              <Grid container justify = 'center'>
+                <Grid item xs = {12} className = {classes.video} align = 'center'>
                   <VideoPlayer videoSrc={selectedVideo.link}></VideoPlayer>
                 </Grid>
                 <Grid item xs={12} className = {classes.videoDetail}>
