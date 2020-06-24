@@ -67,26 +67,30 @@ const useStyles = makeStyles((theme) => ({
   buttonControls: {
     margin: '0 auto'
   },
-  chevronsLeft :{
-    color: '#ccc',
+  chevrons :{
+    color: '#fff',
     display: 'flex',
     flexDirection: 'column',
     cursor: 'pointer',
     zIndex: '5',
     position: 'absolute',
     top: '40%',
-    left: '2%'
+    opacity: '.2',
+    '&:hover': {
+      opacity: '1'
+    }
+    // left: '2%'
   },
-  chevronsRight :{
-    color: '#ccc',
-    display: 'flex',
-    flexDirection: 'column',
-    cursor: 'pointer',
-    zIndex: '5',
-    position: 'absolute',
-    top: '40%',
-    right: '2%'
-  }
+  // chevronsRight :{
+  //   color: '#fff',
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   cursor: 'pointer',
+  //   zIndex: '5',
+  //   position: 'absolute',
+  //   top: '40%',
+  //   right: '2%'
+  // }
 }))
 
 const VideoList = () => {
@@ -222,15 +226,15 @@ const VideoList = () => {
                         name="chevron-circle-left"
                         size="3x"
                         onClick = {handlePrevious}
-                        className={classes.chevronsLeft}
-                        style = {{display: hover ? 'block' : 'none'}}
+                        className={classes.chevrons}
+                        style = {{display: hover ? 'block' : 'none', left: '2%'}}
                       />
                       <FontAwesome
                         name="chevron-circle-right"
                         size="3x"
                         onClick = {handleNext}
-                        className={classes.chevronsRight}
-                        style={{ display: hover ? 'block' : 'none' }}
+                        className={classes.chevrons}
+                        style={{ display: hover ? 'block' : 'none', right: '2%' }}
                       />
                   </div>
                 </Grid>
