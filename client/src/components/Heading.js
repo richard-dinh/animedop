@@ -89,20 +89,23 @@ const Heading = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     updateSearch(userInput)
+    //pushes user to route
+    history.push(`/search/${userInput}`)
+    setUserInput('')
   }
 
   //runs when search is updated
   useEffect(() => {
-    if (search) {
-      //empty our search
-      setUserInput('')
-      //pushes user to route
-      history.push(`/search/${search}`)
-    }
-    else if (localStorage.getItem('previousSearch') && !localStorage.getItem('search')) {
+    // if (search) {
+    //   //empty our search
+    //   setUserInput('')
+    //   //pushes user to route
+    //   history.push(`/search/${search}`)
+    // }
+    if (localStorage.getItem('previousSearch') && !localStorage.getItem('search')) {
       history.push(`/search/${localStorage.getItem('previousSearch')}`)
     }
-  }, [search])
+  }, [])
 
   return (
     <>
