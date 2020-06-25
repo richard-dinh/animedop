@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation} from 'react-router-dom'
 import { AnimeCard } from '../components/index'
 import { makeStyles } from '@material-ui/core/styles'
 import {CssBaseline, Grid, Container, Typography} from '@material-ui/core'
@@ -33,7 +33,7 @@ const Home = () => {
   //run when search is updated
   useEffect(() => {
     //check if search and previousSearch dont exist, if they dont, return to homepage
-    if (search && location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length) !== search) {
+    if ((search && location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length) !== search) || (!search && location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length).length > 0)) {
       let params = location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length)
       console.log(params)
       updateSearch(params)
@@ -75,7 +75,7 @@ const Home = () => {
   useEffect(() => {
     if ((title && mal_id) || (localStorage.getItem('title') && localStorage.getItem('mal_id'))) {
       console.log(title, mal_id)
-      history.push(`/watch/${title || localStorage.getItem('title')}`)
+      history.push(`/watch/${title || localStorage.getItem('title')}/${mal_id}`)
     }
   }, [title, mal_id])
 

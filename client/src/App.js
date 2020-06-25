@@ -51,7 +51,7 @@ function App() {
       ...animeState,
       mal_id,
       title,
-      search: null,
+      // search: null,
       // Clear out selectedVideo for when the user presses back to the anime grid after watching a video
       selectedVideo: null,
     })
@@ -129,7 +129,7 @@ function App() {
             <Route exact path='/search/:title'>
               <AnimeList />
             </Route>
-            <Route exact path='/watch/:title'>
+            <Route exact path='/watch/:title/:id'>
               <VideoList />
             </Route>
             <Route path='/'>

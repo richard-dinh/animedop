@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import API from '../utils/api/api.js'
+import { useLocation } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import VideoPlayer from './VideoPlayer'
@@ -150,7 +151,10 @@ const VideoList = () => {
   }
 
 
+  const location = useLocation()
+
   useEffect(() => {
+    console.log(location.pathname.split('/'))
     //set search to null in event user searches same anime again
     let mal = localStorage.getItem('mal_id') ?? mal_id
     let animeTitle = localStorage.getItem('title') ?? title
@@ -224,14 +228,14 @@ const VideoList = () => {
                     <VideoPlayer videoSrc={selectedVideo.link} />
                       <FontAwesome
                         name="chevron-circle-left"
-                        size="3x"
+                        size="5x"
                         onClick = {handlePrevious}
                         className={classes.chevrons}
                         style = {{display: hover ? 'block' : 'none', left: '2%'}}
                       />
                       <FontAwesome
                         name="chevron-circle-right"
-                        size="3x"
+                        size="5x"
                         onClick = {handleNext}
                         className={classes.chevrons}
                         style={{ display: hover ? 'block' : 'none', right: '2%' }}
