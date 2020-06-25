@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import API from '../utils/api/api.js'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import VideoPlayer from './VideoPlayer'
@@ -101,6 +101,7 @@ const VideoList = () => {
     title,
     selectedVideo,
     setSelectedVideo,
+    updateTitleAndMAL
   } = useContext(AnimeContext)
 
   const [animeVideos, setAnimeVideos] = useState([])
@@ -150,22 +151,15 @@ const VideoList = () => {
     setSelectedVideo(animeVideos[newIndex])
   }
 
-
-  const location = useLocation()
-
-  useEffect(() => {
-    console.log(location.pathname.split('/'))
-    //set search to null in event user searches same anime again
-    let mal = localStorage.getItem('mal_id') ?? mal_id
-    let animeTitle = localStorage.getItem('title') ?? title
-    API.getWiki(parseInt(mal), animeTitle)
+  //function to populate animeVideos
+  const getAnimeVideos = (mal_id, title) => {
+    API.getWiki(mal_id, title)
       .then(({ data: { wikiPage, title: englishTitle } }) => {
         //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
-        API.getVideos(englishTitle ? englishTitle : animeTitle, wikiPage)
+        API.getVideos(englishTitle ? englishTitle : title, wikiPage)
           .then(({ data }) => {
             //remove first element in data (element contains mal id and anime name)
             data.shift()
-            console.log(data)
             setAnimeVideos(data)
             const firstValidLink = data.find((animeVideo) =>
               animeVideo.hasOwnProperty('link')
@@ -176,7 +170,30 @@ const VideoList = () => {
           })
           .catch((err) => console.error(err))
       })
-      .catch((err) => console.error(err))
+    .catch((err) => console.error(err))
+  }
+
+  const location = useLocation()
+  useEffect(() => {
+    //destructure location for last two elements
+    let [,, title_params, mal_params ] = location.pathname.split('/')
+    mal_params = parseInt(mal_params)
+    console.log(mal_id, title)
+    console.log(mal_params, title_params)
+    if(mal_id && title){
+      getAnimeVideos(mal_id, title)
+    }
+    else if( ((mal_id !== mal_params || title !== title_params)) || ((!mal_id && !title) && (mal_params.toString().length > 0 && title_params.length > 0))){
+      console.log('ping')
+      updateTitleAndMAL(mal_params, title_params)
+      getAnimeVideos(mal_params, title_params)
+    }
+    else{
+      useHistory.push('/')
+    }
+    //set search to null in event user searches same anime again
+    // let mal = localStorage.getItem('mal_id') ?? mal_id
+    // let animeTitle = localStorage.getItem('title') ?? title
   }, [])
 
   if (!selectedVideo) {

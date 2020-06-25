@@ -35,7 +35,6 @@ const Home = () => {
     //check if search and previousSearch dont exist, if they dont, return to homepage
     if ((search && location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length) !== search) || (!search && location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length).length > 0)) {
       let params = location.pathname.substr(location.pathname.lastIndexOf('/') + 1, location.pathname.length)
-      console.log(params)
       updateSearch(params)
       //if user return to search view from video view, get the user's last search
       setAnimeList([])
@@ -74,7 +73,6 @@ const Home = () => {
 
   useEffect(() => {
     if ((title && mal_id) || (localStorage.getItem('title') && localStorage.getItem('mal_id'))) {
-      console.log(title, mal_id)
       history.push(`/watch/${title || localStorage.getItem('title')}/${mal_id}`)
     }
   }, [title, mal_id])
