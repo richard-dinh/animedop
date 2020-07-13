@@ -1,4 +1,4 @@
-import React, {MetaHTMLAttributes} from 'react'
+import React, { MetaHTMLAttributes } from 'react'
 import ReactPlayer from 'react-player'
 import { useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -6,13 +6,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 const VideoPlayer = props => {
 
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('md'))
+  const matches = useMediaQuery(theme.breakpoints.down('sm'))
   return (
     <video
-      src = {props.videoSrc}
-      preload = 'auto'
+      src={props.videoSrc}
+      preload='auto'
       controls
-      style = {{height: '80vh', width: '100%'}}
+      style={{ height: matches ? 'auto' : '80vh', width: '100%' }}
+
     />
     // <ReactPlayer
     //   url={videoSrc}

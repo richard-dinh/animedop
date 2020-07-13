@@ -5,8 +5,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import VideoPlayer from './VideoPlayer'
 import loadingGif from './../assets/raphtalia-spin.gif'
-import { Grid, Paper, Typography, Container, IconButton, Tooltip } from '@material-ui/core'
-import {SkipPrevious, SkipNext} from '@material-ui/icons'
+import { Grid, Paper, Typography, Container, IconButton, Tooltip, Card, CardContent } from '@material-ui/core'
+import { SkipPrevious, SkipNext } from '@material-ui/icons'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
 import FontAwesome from 'react-fontawesome'
 const useStyles = makeStyles((theme) => ({
@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   sideVideo: {
     display: 'flex',
-    alignItems: 'center',
     cursor: 'pointer',
     maxHeight: '19%',
+    backgroundColor: 'rgba(255,255,255,0.5)'
   },
   sideVideoMargin: {
     marginTop: '.5rem'
@@ -28,14 +28,14 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '1rem',
     maxHeight: '90vh',
     //adjust padding on left and right for anything lower than lg 
-    [theme.breakpoints.down('lg')]:{
+    [theme.breakpoints.down('lg')]: {
       paddingLeft: '2rem',
       paddingTop: '2rem'
     }
   },
   sideBar: {
     paddingTop: '1rem',
-    paddingRight: '4rem', 
+    paddingRight: '4rem',
     paddingLeft: '.75rem',
     overflow: 'auto',
     maxHeight: '90vh',
@@ -58,8 +58,8 @@ const useStyles = makeStyles((theme) => ({
     width: 'auto',
     zIndex: '4',
     backgroundColor: 'black',
-    [theme.breakpoints.down('xs')]: {
-      height: '36vh'
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto'
     }
   },
   buttonGroup: {
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   buttonControls: {
     margin: '0 auto'
   },
-  chevrons :{
+  chevrons: {
     color: '#fff',
     display: 'flex',
     flexDirection: 'column',
@@ -82,16 +82,12 @@ const useStyles = makeStyles((theme) => ({
     }
     // left: '2%'
   },
-  // chevronsRight :{
-  //   color: '#fff',
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   cursor: 'pointer',
-  //   zIndex: '5',
-  //   position: 'absolute',
-  //   top: '40%',
-  //   right: '2%'
-  // }
+  titleStyle: {
+    overflow: 'hidden',
+    height: '90%',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'pre-line'
+  }
 }))
 
 const VideoList = () => {
@@ -111,13 +107,13 @@ const VideoList = () => {
   })
 
   const updateVideoIndex = (index, maxLength) => {
-    setVideoIndex({ ...videoIndex, index, maxLength})
+    setVideoIndex({ ...videoIndex, index, maxLength })
   }
 
   const updateIndex = index => {
-    setVideoIndex({...videoIndex, index})
+    setVideoIndex({ ...videoIndex, index })
   }
-  
+
   //hover state
   const [hover, setHover] = useState(false)
 
@@ -143,7 +139,7 @@ const VideoList = () => {
       setSelectedVideo(animeVideos[newIndex])
     }
   }
-  
+
   //listener for next button click
   const handleNext = () => {
     let newIndex = (videoIndex.index + 1) % videoIndex.maxLength
@@ -170,25 +166,25 @@ const VideoList = () => {
           })
           .catch((err) => console.error(err))
       })
-    .catch((err) => console.error(err))
+      .catch((err) => console.error(err))
   }
 
   const location = useLocation()
   useEffect(() => {
     //destructure location for last two elements
-    let [,, title_params, mal_params ] = location.pathname.split('/')
+    let [, , title_params, mal_params] = location.pathname.split('/')
     mal_params = parseInt(mal_params)
     console.log(mal_id, title)
     console.log(mal_params, title_params)
-    if(mal_id && title){
+    if (mal_id && title) {
       getAnimeVideos(mal_id, title)
     }
-    else if( ((mal_id !== mal_params || title !== title_params)) || ((!mal_id && !title) && (mal_params.toString().length > 0 && title_params.length > 0))){
+    else if (((mal_id !== mal_params || title !== title_params)) || ((!mal_id && !title) && (mal_params.toString().length > 0 && title_params.length > 0))) {
       console.log('ping')
       updateTitleAndMAL(mal_params, title_params)
       getAnimeVideos(mal_params, title_params)
     }
-    else{
+    else {
       useHistory.push('/')
     }
     //set search to null in event user searches same anime again
@@ -205,91 +201,106 @@ const VideoList = () => {
   } else {
     const listAnimeVideos = animeVideos.map((animeVideo, index) =>
       animeVideo.link ? (
-        <Paper
-          elevation = {3}
-          className = {index === 0 ? classes.sideVideo : `${classes.sideVideo} ${classes.sideVideoMargin}`}
+        // <Paper
+        //   elevation={3}
+        //   className={index === 0 ? classes.sideVideo : `${classes.sideVideo} ${classes.sideVideoMargin}`}
+        //   onClick={() => {
+        //     handleClick(animeVideo, index)
+        //   }}
+        // >
+        //   <Grid container className={classes.fillHeight}>
+        //     <Grid item xs={4}>
+        //       <img
+        //         src='https://i.imgur.com/I2jULg9.png'
+        //         alt='thumbnail'
+        //       />
+        //     </Grid>
+        //     <Grid item xs={8} className={classes.sideVideoDetail}>
+        //       <Typography component="h5" variant="h5">
+        //         {animeVideo.title}
+        //       </Typography>
+        //       <Typography variant="subtitle1" color="textSecondary">
+        //         {animeVideo.number}
+        //       </Typography>
+        //     </Grid>
+        //   </Grid>
+        // </Paper>
+        <Card
+          className={index === 0 ? classes.sideVideo : `${classes.sideVideo} ${classes.sideVideoMargin}`}
           onClick={() => {
             handleClick(animeVideo, index)
           }}
         >
-          <Grid container className = {classes.fillHeight}>
-            <Grid item xs={4}>
-              <img
-                src='https://i.imgur.com/I2jULg9.png'
-                alt='thumbnail'
-              />
-            </Grid>
-            <Grid item xs={8} className = {classes.sideVideoDetail}>
-              <Typography component="h5" variant="h5">
-                {animeVideo.title}
-              </Typography>
-              <Typography variant="subtitle1" color="textSecondary">
-                {animeVideo.number}
-              </Typography>
-            </Grid>
-          </Grid>
-        </Paper>
+          <CardContent>
+            <Typography component='h5' variant='h5' className={classes.titleStyle}>
+              {animeVideo.title}
+            </Typography>
+            <Typography variant='subtitle1' color="textSecondary">
+              {animeVideo.number}
+            </Typography>
+          </CardContent>
+        </Card>
       ) : null
     )
     return (
-      <div className = {classes.root}>
+      <div className={classes.root}>
         <Grid container>
-          <Grid item xs = {12} lg = {9} className = {classes.videoPlayer}>
+          <Grid item xs={12} md={9} className={classes.videoPlayer}>
             {/* Video that is playing */}
-              <Grid container justify = 'center'>
-                <Grid item xs = {12} className = {classes.video} align = 'center' 
-                  onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)}
-                >
-                  <div style = {{position: 'relative'}}>
-                    <VideoPlayer videoSrc={selectedVideo.link} />
-                      <FontAwesome
-                        name="chevron-circle-left"
-                        size="5x"
-                        onClick = {handlePrevious}
-                        className={classes.chevrons}
-                        style = {{display: hover ? 'block' : 'none', left: '2%'}}
-                      />
-                      <FontAwesome
-                        name="chevron-circle-right"
-                        size="5x"
-                        onClick = {handleNext}
-                        className={classes.chevrons}
-                        style={{ display: hover ? 'block' : 'none', right: '2%' }}
-                      />
-                  </div>
-                </Grid>
-                <Grid item xs={12} className = {classes.videoDetail}>
-                  <Grid container>
-                    <Grid item lg = {9} xs = {12}>
-                      <Typography component="h4" variant="h4">
-                        {`${selectedVideo.number}: ${selectedVideo.title}`}
-                      </Typography>
-                    </Grid>
-                    <Grid item lg = {3} xs = {12} className = {classes.buttonGroup}>
-                      {/* <SkipPrevious className = {classes.buttonControls} fontSize = "large" onClick = {handlePrevious}/>
+            <Grid container justify='center'>
+              <Grid item xs={12} className={classes.video} align='center'
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                <div style={{ position: 'relative' }}>
+                  <VideoPlayer videoSrc={selectedVideo.link} />
+                  <FontAwesome
+                    name="chevron-circle-left"
+                    size="5x"
+                    onClick={handlePrevious}
+                    className={classes.chevrons}
+                    style={{ display: hover ? 'block' : 'none', left: '2%' }}
+                  />
+                  <FontAwesome
+                    name="chevron-circle-right"
+                    size="5x"
+                    onClick={handleNext}
+                    className={classes.chevrons}
+                    style={{ display: hover ? 'block' : 'none', right: '2%' }}
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} className={classes.videoDetail}>
+                <Grid container>
+                  <Grid item md={9} xs={12}>
+                    <Typography component="h4" variant="h4">
+                      {`${selectedVideo.number}: ${selectedVideo.title}`}
+                    </Typography>
+                  </Grid>
+                  <Grid item md={3} xs={12} className={classes.buttonGroup}>
+                    {/* <SkipPrevious className = {classes.buttonControls} fontSize = "large" onClick = {handlePrevious}/>
                       <SkipNext className = {classes.buttonControls} fontSize = "large" onClick = {handleNext}/> */}
-                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-          </Grid> 
-          <Grid item xs={12} lg={3} className = {classes.sideBar} direction = 'column'>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={3} className={classes.sideBar} direction='column'>
             {/* Video Selection sidebar */}
-              {listAnimeVideos}
+            {listAnimeVideos}
           </Grid>
         </Grid>
-        <KeyboardEventHandler 
-          handleEventType = 'keyup'
-          handleKeys = {['left', 'right']}
-          onKeyEvent = {(key, e) => {
+        <KeyboardEventHandler
+          handleEventType='keyup'
+          handleKeys={['left', 'right']}
+          onKeyEvent={(key, e) => {
             let newIndex = 0
-            if(key === 'left'){
+            if (key === 'left') {
               console.log('left')
               //if user is on first video, send them to last video
               handlePrevious()
             }
-            else{
+            else {
               handleNext()
             }
           }}
