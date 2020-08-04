@@ -152,6 +152,7 @@ const VideoList = () => {
     API.getWiki(mal_id, title)
       .then(({ data: { wikiPage, title: englishTitle } }) => {
         //if english title is returned due to title not being found in reddit wiki, run getVideos with english title (title returned from call)
+        console.log(wikiPage, englishTitle)
         API.getVideos(englishTitle ? englishTitle : title, wikiPage)
           .then(({ data }) => {
             //remove first element in data (element contains mal id and anime name)
@@ -164,7 +165,10 @@ const VideoList = () => {
             setSelectedVideo(firstValidLink)
             updateVideoIndex(0, data.length)
           })
-          .catch((err) => console.error(err))
+          .catch((err) => {
+            console.log('ping')
+            console.error(err)
+          })
       })
       .catch((err) => console.error(err))
   }
@@ -174,13 +178,10 @@ const VideoList = () => {
     //destructure location for last two elements
     let [, , title_params, mal_params] = location.pathname.split('/')
     mal_params = parseInt(mal_params)
-    console.log(mal_id, title)
-    console.log(mal_params, title_params)
     if (mal_id && title) {
       getAnimeVideos(mal_id, title)
     }
     else if (((mal_id !== mal_params || title !== title_params)) || ((!mal_id && !title) && (mal_params.toString().length > 0 && title_params.length > 0))) {
-      console.log('ping')
       updateTitleAndMAL(mal_params, title_params)
       getAnimeVideos(mal_params, title_params)
     }

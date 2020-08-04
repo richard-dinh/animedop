@@ -113,7 +113,7 @@ function App() {
         {transitions.map(({ item, props, key }) => (
           <animated.div
             key={key}
-            class='bg'
+            className='bg'
             style={{
               ...props,
               backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, .4) 60%, rgb(255, 255, 255)), url(${item.url})`,
