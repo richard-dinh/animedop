@@ -83,7 +83,7 @@ function App() {
     {
       id: 2,
       url:
-        'https://c.wallhere.com/photos/3a/4a/anime_girls_loli_eating_Tate_no_Yuusha_no_Nariagari_Raphtalia-1777113.jpg!d',
+        'https://i.pinimg.com/originals/db/88/54/db8854c289a5328b98702ea803d63558.png',
     },
     {
       id: 3,
@@ -116,7 +116,7 @@ function App() {
             class='bg'
             style={{
               ...props,
-              backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, rgb(255, 255, 255)), url(${item.url})`,
+              backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, .4) 60%, rgb(255, 255, 255)), url(${item.url})`,
             }}
           ></animated.div>
         ))}
