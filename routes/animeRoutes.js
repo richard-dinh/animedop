@@ -5,9 +5,9 @@ const snoowrap = require('snoowrap')
 
 const r = new snoowrap({
   userAgent: 'test',
-  clientId: 'O31LPOU1GG6mMQ',
-  clientSecret: 'kum4bqKZDiIIPPx_S2Emlf-AvPQ',
-  refreshToken: '31646591-6tlCeQZyIo4cZfWUZDGfkd8li3k'
+  clientId: process.env.CLIENTID,
+  clientSecret: process.env.SECRET,
+  refreshToken: process.env.REFRESHTOKEN
 })
 
 const filterWiki = (data, title) => {
