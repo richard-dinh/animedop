@@ -4,7 +4,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import VideoPlayer from './VideoPlayer'
-import loadingGif from './../assets/raphtalia-spin.gif'
+import {Loading} from '../components'
 import { Grid, Paper, Typography, Container, IconButton, Tooltip, Card, CardContent } from '@material-ui/core'
 import { SkipPrevious, SkipNext } from '@material-ui/icons'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
@@ -194,9 +194,7 @@ const VideoList = () => {
 
   if (!selectedVideo) {
     return (
-      <div>
-        <img src={loadingGif} alt='loading...' />
-      </div>
+      <Loading />
     )
   } else {
     const listAnimeVideos = animeVideos.map((animeVideo, index) =>

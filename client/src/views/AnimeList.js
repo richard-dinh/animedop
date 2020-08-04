@@ -1,20 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory, useLocation} from 'react-router-dom'
-import { AnimeCard } from '../components/index'
+import { AnimeCard, Loading } from '../components/index'
 import { makeStyles } from '@material-ui/core/styles'
 import {CssBaseline, Grid, Container, Typography} from '@material-ui/core'
 import AnimeContext from '../utils/context/AnimeContext.js'
 import API from '../utils/api/api'
-import loadingGif from './../assets/raphtalia-spin.gif'
 const useStyles = makeStyles((theme) => ({
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
+  }
 }))
 
 const Home = () => {
@@ -78,7 +73,9 @@ const Home = () => {
   }, [title, mal_id])
 
   if (animeList.length < 1) {
-    return <img src={loadingGif} alt='loading...' />
+    return (
+      <Loading />
+    )
   } else {
     return (
       <>
@@ -100,21 +97,6 @@ const Home = () => {
             </Grid>
           </Container>
         </main>
-        {/* Footer */}
-        <footer className={classes.footer}>
-          <Typography variant='h6' align='center' gutterBottom>
-            Footer
-          </Typography>
-          <Typography
-            variant='subtitle1'
-            align='center'
-            color='textSecondary'
-            component='p'
-          >
-            Something here to give the footer a purpose!
-          </Typography>
-        </footer>
-        {/* End footer */}
       </>
     )
   }
