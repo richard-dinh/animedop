@@ -100,6 +100,7 @@ const VideoList = () => {
     updateTitleAndMAL
   } = useContext(AnimeContext)
 
+  const history = useHistory()
   const [animeVideos, setAnimeVideos] = useState([])
   const [videoIndex, setVideoIndex] = useState({
     index: 0,
@@ -166,11 +167,15 @@ const VideoList = () => {
             updateVideoIndex(0, data.length)
           })
           .catch((err) => {
-            console.log('ping')
+            history.push(`/search/${localStorage.getItem('previousSearch')}`)
             console.error(err)
           })
       })
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        updateTitleAndMAL(null, null)
+        history.push(`/search/${localStorage.getItem('previousSearch')}`)
+        console.error(err)
+      })
   }
 
   const location = useLocation()
@@ -186,7 +191,7 @@ const VideoList = () => {
       getAnimeVideos(mal_params, title_params)
     }
     else {
-      useHistory.push('/')
+      history.push('/')
     }
     //set search to null in event user searches same anime again
     // let mal = localStorage.getItem('mal_id') ?? mal_id
