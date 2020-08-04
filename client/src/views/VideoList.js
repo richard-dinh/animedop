@@ -97,7 +97,8 @@ const VideoList = () => {
     title,
     selectedVideo,
     setSelectedVideo,
-    updateTitleAndMAL
+    updateTitleAndMAL,
+    updateNoResultsModal
   } = useContext(AnimeContext)
 
   const history = useHistory()
@@ -167,12 +168,13 @@ const VideoList = () => {
             updateVideoIndex(0, data.length)
           })
           .catch((err) => {
+            updateNoResultsModal(true)
             history.push(`/search/${localStorage.getItem('previousSearch')}`)
             console.error(err)
           })
       })
       .catch((err) => {
-        updateTitleAndMAL(null, null)
+        updateNoResultsModal(true)
         history.push(`/search/${localStorage.getItem('previousSearch')}`)
         console.error(err)
       })

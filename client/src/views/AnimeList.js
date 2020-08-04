@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useHistory, useLocation} from 'react-router-dom'
-import { AnimeCard, Loading } from '../components/index'
+import { AnimeCard, Loading, Modal } from '../components/index'
 import { makeStyles } from '@material-ui/core/styles'
 import {CssBaseline, Grid, Container, Typography} from '@material-ui/core'
 import AnimeContext from '../utils/context/AnimeContext.js'
@@ -22,6 +22,7 @@ const Home = () => {
     mal_id,
     title,
     updateSearch,
+    noResultsModal
   } = useContext(AnimeContext)
   const [animeList, setAnimeList] = useState([])
 
@@ -82,6 +83,7 @@ const Home = () => {
         <CssBaseline />
         {/* <Heading /> */}
         <main>
+          {noResultsModal ? <Modal title = {'No Results Found!'} description ={'No openings and endings were found for this anime. Please make another selection.'}/> : null}
           <Container className={classes.cardGrid} maxWidth='md'>
             <Grid container spacing={4}>
               <Grid item xs={12}>

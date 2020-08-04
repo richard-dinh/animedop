@@ -31,7 +31,6 @@ router.get('/animesearch/:mal_id/:title', (req, res) => {
         axios.get(`https://api.jikan.moe/v3/anime/${req.params.mal_id}`)
         .then( ({data: jikanData}) => {
           //check data for english title as well
-          console.log(jikanData)
           if(jikanData.title_english === null){
             //no english title (meaning no titles found)
             res.sendStatus(400)

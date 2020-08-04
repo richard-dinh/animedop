@@ -20,6 +20,7 @@ function App() {
     mal_id: null,
     selectedVideo: null,
     displayModal: true,
+    noResultsModal: false
   })
   animeState.updateSearch = (search) => {
     //previousSearch variable to save user's last search. Only create item if the value passed in is not null (value is null when user searches same anime twice in a row)
@@ -72,10 +73,15 @@ function App() {
     // }
     setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null })
   }
+
   animeState.updateDisplayModal = () => {
     setAnimeState({ ...animeState, displayModal: false})
   }
 
+  animeState.updateNoResultsModal = boolean => {
+    //will trigger when a user selects an anime and no op / ed are found
+    setAnimeState({...animeState, mal_id: null, title: null, noResultsModal: boolean})
+  }
 
   const slides = [
     { id: 0, url: 'https://images6.alphacoders.com/991/991043.jpg' },
