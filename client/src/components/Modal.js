@@ -56,13 +56,16 @@ const SpringModal = children => {
   const [open, setOpen] = React.useState(true);
 
   //bring updateDisplayModal from AnimeContext
-  // const { updateNoResultsModal } = useContext(AnimeContext)
+  const { updateNoResultsModal } = useContext(AnimeContext)
 
   const handleClose = () => {
     setOpen(false);
     localStorage.setItem('welcomeModal', true)
   };
 
+  const handleCloseNoResults = () => {
+    updateNoResultsModal(false)
+  }
   return (
     <div>
       <Modal
@@ -70,7 +73,7 @@ const SpringModal = children => {
         aria-describedby="spring-modal-description"
         className={classes.modal}
         open={open}
-        onClose={handleClose}
+        onClose={children.noResults ? handleCloseNoResults :handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{

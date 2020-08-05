@@ -69,7 +69,7 @@ const Home = () => {
 
   useEffect(() => {
     if ((title && mal_id) || (localStorage.getItem('title') && localStorage.getItem('mal_id'))) {
-      history.push(`/watch/${title || localStorage.getItem('title')}/${mal_id}`)
+      history.push(`/watch/${encodeURIComponent(title) || localStorage.getItem('title')}/${mal_id}`)
     }
   }, [title, mal_id])
 
@@ -83,7 +83,7 @@ const Home = () => {
         <CssBaseline />
         {/* <Heading /> */}
         <main>
-          {noResultsModal ? <Modal title = {'No Results Found!'} description ={'No openings and endings were found for this anime. Please make another selection.'}/> : null}
+          {noResultsModal ? <Modal title = {'No Results Found!'} description ={'No openings and endings were found for this anime. Please make another selection.'} noResults = {true}/> : null}
           <Container className={classes.cardGrid} maxWidth='md'>
             <Grid container spacing={4}>
               <Grid item xs={12}>
