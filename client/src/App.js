@@ -20,6 +20,7 @@ function App() {
     mal_id: null,
     selectedVideo: null,
     displayModal: true,
+    noResultsModal: false
   })
   animeState.updateSearch = (search) => {
     //previousSearch variable to save user's last search. Only create item if the value passed in is not null (value is null when user searches same anime twice in a row)
@@ -34,6 +35,9 @@ function App() {
       selectedVideo: null,
     })
     localStorage.setItem('search', search)
+    //remove title and mal_id from localstorage when doing a new search
+    // localStorage.removeItem('mal_id')
+    // localStorage.removeItem('title')
   }
   animeState.updateVideos = (videos) => {
     setAnimeState({ ...animeState, videos })
@@ -48,7 +52,7 @@ function App() {
       ...animeState,
       mal_id,
       title,
-      search: null,
+      // search: null,
       // Clear out selectedVideo for when the user presses back to the anime grid after watching a video
       selectedVideo: null,
     })
@@ -63,13 +67,21 @@ function App() {
   }
   animeState.setSelectedVideo = (selectedVideo) => {
     //set search to null to prevent VideoList from getting pushed back to AnimeList due to async
-    console.log(animeState)
+    // if(!localStorage.getItem('mal_id') && !localStorage.getItem('title')){
+    //   localStorage.setItem('mal_id', animeState.mal_id)
+    //   localStorage.setItem('title', animeState.title)
+    // }
     setAnimeState({ ...animeState, selectedVideo, mal_id: null, title: null })
   }
+
   animeState.updateDisplayModal = () => {
     setAnimeState({ ...animeState, displayModal: false})
   }
 
+  animeState.updateNoResultsModal = boolean => {
+    //will trigger when a user selects an anime and no op / ed are found
+    setAnimeState({...animeState, mal_id: null, title: null, noResultsModal: boolean})
+  }
 
   const slides = [
     { id: 0, url: 'https://images6.alphacoders.com/991/991043.jpg' },
@@ -77,7 +89,7 @@ function App() {
     {
       id: 2,
       url:
-        'https://c.wallhere.com/photos/3a/4a/anime_girls_loli_eating_Tate_no_Yuusha_no_Nariagari_Raphtalia-1777113.jpg!d',
+        'https://i.pinimg.com/originals/db/88/54/db8854c289a5328b98702ea803d63558.png',
     },
     {
       id: 3,
@@ -107,10 +119,10 @@ function App() {
         {transitions.map(({ item, props, key }) => (
           <animated.div
             key={key}
-            class='bg'
+            className='bg'
             style={{
               ...props,
-              backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0) 60%, rgb(255, 255, 255)), url(${item.url})`,
+              backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, .4) 60%, rgb(255, 255, 255)), url(${item.url})`,
             }}
           ></animated.div>
         ))}
@@ -122,7 +134,7 @@ function App() {
             <Route exact path='/search/:title'>
               <AnimeList />
             </Route>
-            <Route exact path='/watch/:title'>
+            <Route exact path='/watch/:title/:id'>
               <VideoList />
             </Route>
             <Route path='/'>

@@ -5,9 +5,9 @@ const snoowrap = require('snoowrap')
 
 const r = new snoowrap({
   userAgent: 'test',
-  clientId: 'O31LPOU1GG6mMQ',
-  clientSecret: 'kum4bqKZDiIIPPx_S2Emlf-AvPQ',
-  refreshToken: '31646591-6tlCeQZyIo4cZfWUZDGfkd8li3k'
+  clientId: process.env.CLIENTID,
+  clientSecret: process.env.SECRET,
+  refreshToken: process.env.REFRESHTOKEN
 })
 
 const filterWiki = (data, title) => {
@@ -29,16 +29,20 @@ router.get('/animesearch/:mal_id/:title', (req, res) => {
       //error checking for right title
       if (data.indexOf(animeName) === -1) {
         axios.get(`https://api.jikan.moe/v3/anime/${req.params.mal_id}`)
-        .then( ({data: {title_english}}) => {
+        .then( ({data: jikanData}) => {
           //check data for english title as well
-          if(data.indexOf(title_english) === -1) {
+          if(jikanData.title_english === null){
+            //no english title (meaning no titles found)
+            res.sendStatus(400)
+          }
+          else if(data.indexOf(jikanData.title_english) === -1) {
             //no titles found
             res.sendStatus(400)
           }
           else{
             //if english title was found instead
-            wikiString = filterWiki(data, title_english)
-            res.json({ wikiPage: wikiString[wikiString.length - 1], title: title_english })
+            wikiString = filterWiki(data, jikanData.title_english)
+            res.json({ wikiPage: wikiString[wikiString.length - 1], title: jikanData.title_english })
           }
         })
         .catch(err => {

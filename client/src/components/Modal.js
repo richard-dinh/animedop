@@ -51,18 +51,21 @@ Fade.propTypes = {
   onExited: PropTypes.func,
 };
 
-const SpringModal = () => {
+const SpringModal = children => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
   //bring updateDisplayModal from AnimeContext
-  // const { updateDisplayModal } = useContext(AnimeContext)
+  const { updateNoResultsModal } = useContext(AnimeContext)
 
   const handleClose = () => {
     setOpen(false);
     localStorage.setItem('welcomeModal', true)
   };
 
+  const handleCloseNoResults = () => {
+    updateNoResultsModal(false)
+  }
   return (
     <div>
       <Modal
@@ -70,7 +73,7 @@ const SpringModal = () => {
         aria-describedby="spring-modal-description"
         className={classes.modal}
         open={open}
-        onClose={handleClose}
+        onClose={children.noResults ? handleCloseNoResults :handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -79,8 +82,8 @@ const SpringModal = () => {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="spring-modal-title">Welcome to Animedop!</h2>
-            <p id="spring-modal-description">Search up Animes by title and watch their Opening and Endings!</p>
+            <h2 id="spring-modal-title">{children.title}</h2>
+            <p id="spring-modal-description">{children.description}</p>
           </div>
         </Fade>
       </Modal>
